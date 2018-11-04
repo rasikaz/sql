@@ -1,0 +1,245 @@
+SQL> select * from madushan;
+select * from madushan
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select * from PS2014058.madushan
+SQL> /
+
+EMP_NAME                                                                                                                                                                                                 MY_COMMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+Madushan                                                                                                                                                                                                 Dinusha                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+SQL> 
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create user rasika idendified by
+  2* rasika
+SQL> /
+create user rasika idendified by
+                   *
+ERROR at line 1:
+ORA-00922: missing or invalid option 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create user rasika identified by
+  2* rasika
+SQL> /
+rasika
+*
+ERROR at line 2:
+ORA-01031: insufficient privileges 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  insert into PS2014058.madushan
+  2* values('rasika', 'weragoda')
+SQL> /
+insert into PS2014058.madushan
+                      *
+ERROR at line 1:
+ORA-01031: insufficient privileges 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* grand insert on rasika to PS2014282
+SQL> /
+grand insert on rasika to PS2014282
+*
+ERROR at line 1:
+ORA-00900: invalid SQL statement 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* grant insert on rasika to PS2014282
+SQL> /
+
+Grant succeeded.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select * from PS2014282.jith
+SQL> /
+
+EMP_NAME                                                                                                                                                                                                 MY_COMMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+Jithmini                                                                                                                                                                                                 Jayasekara                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  insert into rasika
+  2* values('test','test')
+SQL> /
+
+1 row created.
+
+SQL> select * from PS2014282.jith
+  2  ;
+
+EMP_NAME                                                                                                                                                                                                 MY_COMMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+Jithmini                                                                                                                                                                                                 Jayasekara                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+SQL> select * from rasika;
+
+EMP_NAME             MY_COMMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+-------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+Rasika               Weragoda                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+test                 test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from rasika;
+
+EMP_NAME             MY_COMMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+-------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+Jithmini             Jayasekara                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+Rasika               Weragoda                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+test                 test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+SQL> select * from PS2014282.jith
+  2  ;
+
+EMP_NAME                                                                                                                                                                                                 MY_COMMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+Jithmini                                                                                                                                                                                                 Jayasekara                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  insert into PS2014282.jith
+  2* values('please','dont cry')
+  3  /
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from PS2014282.jith
+  2  ;
+
+EMP_NAME                                                                                                                                                                                                 MY_COMMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+Jithmini                                                                                                                                                                                                 Jayasekara                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+Rasika                                                                                                                                                                                                   Modai                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+please                                                                                                                                                                                                   dont cry                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
+SQL> clear screen
+
+SQL> revoke insert on rasika from PS2014282
+  2  ;
+
+Revoke succeeded.
+
+SQL> delete from rasika;
+
+3 rows deleted.
+
+SQL> select * from rasika;
+
+no rows selected
+
+SQL> roll back
+Rollback complete.
+SQL> select * from rasika;
+
+EMP_NAME             MY_COMMENT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+-------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+Jithmini             Jayasekara                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+Rasika               Weragoda                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+test                 test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+
+SQL> trancate table rasika;
+SP2-0734: unknown command beginning "trancate t..." - rest of line ignored.
+SQL> truncate table rasika;
+
+Table truncated.
+
+SQL> roll back
+Rollback complete.
+SQL> select * from rasika;
+
+no rows selected
+
+SQL> drop table rasika;
+
+Table dropped.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create table rasika(
+  2  	emp_no number,
+  3  	ename varchar2(100)
+  4* )
+SQL> /
+
+Table created.
+
+SQL> spool off
+
+
+SQL> select seq_rasika.currval from dual;
+
+   CURRVAL
+----------
+       323
+
+SQL> ./
+SP2-0042: unknown command "./" - rest of line ignored.
+SQL> disc
+Disconnected from Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+SQL> connect PS2014041/PS2014041@IT
+Connected.
+SQL> select seq_rasika.currval
+  2  from dual;
+select seq_rasika.currval
+       *
+ERROR at line 1:
+ORA-08002: sequence SEQ_RASIKA.CURRVAL is not yet defined in this session
+
+
+SQL> select seq_rasika.currval from dual;
+select seq_rasika.currval from dual
+                               *
+ERROR at line 1:
+ORA-08002: sequence SEQ_RASIKA.CURRVAL is not yet defined in this session
+
+
+SQL> select seq_rasika.nextval from dual;
+
+   NEXTVAL
+----------
+       324
+
+SQL> select seq_rasika.currval from dual;
+
+   CURRVAL
+----------
+       324
+
+SQL> spool off
+not spooling currently
+SQL>
