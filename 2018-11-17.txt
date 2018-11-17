@@ -1,0 +1,476 @@
+SQL> ed
+Wrote file afiedt.buf
+
+  1  BEGIN
+  2  	NULL;
+  3* END
+  4  /
+END
+  *
+ERROR at line 3:
+ORA-06550: line 3, column 3: 
+PLS-00103: Encountered the symbol "end-of-file" when expecting one of the following: 
+; <an identifier> <a double-quoted delimited-identifier> 
+The symbol ";" was substituted for "end-of-file" to continue. 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  BEGIN
+  2  	NULL;
+  3* END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn varchar2(10);
+  3  BEGIN
+  4  	select first_name into vc_fn
+  5  	from employees
+  6  	where employee_id = 150
+  7* END;
+  8  /
+END;
+*
+ERROR at line 7:
+ORA-06550: line 6, column 26: 
+PL/SQL: ORA-00933: SQL command not properly ended 
+ORA-06550: line 4, column 2: 
+PL/SQL: SQL Statement ignored 
+ORA-06550: line 7, column 4: 
+PLS-00103: Encountered the symbol "end-of-file" when expecting one of the following: 
+begin case declare end exception exit for goto if loop mod 
+null pragma raise return select update while with 
+<an identifier> <a double-quoted de 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn varchar2(10);
+  3  BEGIN
+  4  	select first_name into vc_fn
+  5  	from employees
+  6  	where employee_id = 150;
+  7* END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* DBMS_OUTPUT.PUT_LINE(vc_fn);
+SQL> /
+DBMS_OUTPUT.PUT_LINE(vc_fn);
+*
+ERROR at line 1:
+ORA-00900: invalid SQL statement 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         vc_fn varchar2(10);
+  3  BEGIN
+  4         select first_name into vc_fn
+  5         from employees
+  6         where employee_id = 150;
+  7  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  8* END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  BEGIN
+  4        	select first_name into vc_fn
+  5        	from employees
+  6        	where employee_id = 150
+  7  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  8* END;
+SQL> /
+	DBMS_OUTPUT.PUT_LINE(vc_fn);
+	*
+ERROR at line 7:
+ORA-06550: line 7, column 2: 
+PL/SQL: ORA-00933: SQL command not properly ended 
+ORA-06550: line 4, column 8: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  BEGIN
+  4        	select first_name into vc_fn
+  5        	from employees
+  6        	where employee_id = 150;
+  7  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  8* END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON
+SQL> /
+Peter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  	vc_ln varchar2(20);
+  4  BEGIN
+  5        	select first_name,last_name into vc_fn || vc_ln  
+  6        	from employees
+  7        	where employee_id = 150;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  9* END;
+SQL> /
+      	select first_name,last_name into vc_fn || vc_ln  
+      	                                        *
+ERROR at line 5:
+ORA-06550: line 5, column 48: 
+PLS-00306: wrong number or types of arguments in call to 'CONCAT' 
+ORA-06550: line 6, column 8: 
+PL/SQL: ORA-00904: : invalid identifier 
+ORA-06550: line 5, column 8: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  	vc_ln varchar2(20);
+  4  BEGIN
+  5        	select first_name,last_name into vc_fn , vc_ln  
+  6        	from employees
+  7        	where employee_id = 150;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn || vc_ln );
+  9* END;
+SQL> /
+PeterTucker                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  	vc_ln varchar2(20);
+  4  BEGIN
+  5        	select first_name,last_name into vc_fn , vc_ln  
+  6        	from employees
+  7        	where employee_id = 150;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn ||" "|| vc_ln );
+  9* END;
+SQL> /
+	DBMS_OUTPUT.PUT_LINE(vc_fn ||" "|| vc_ln );
+	                             *
+ERROR at line 8:
+ORA-06550: line 8, column 31: 
+PLS-00201: identifier ' ' must be declared 
+ORA-06550: line 8, column 2: 
+PL/SQL: Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  	vc_ln varchar2(20);
+  4  BEGIN
+  5        	select first_name,last_name into vc_fn , vc_ln  
+  6        	from employees
+  7        	where employee_id = 150;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn ||' '|| vc_ln );
+  9* END;
+SQL> /
+Peter Tucker                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  	vc_ln varchar2(20);
+  4  	vn_empno number = 150
+  5  BEGIN
+  6        	select first_name,last_name into vc_fn , vc_ln  
+  7        	from employees
+  8        	where employee_id = vn_empno;
+  9  	DBMS_OUTPUT.PUT_LINE(vc_fn ||' '|| vc_ln );
+ 10* END;
+SQL> /
+	vn_empno number = 150
+	                *
+ERROR at line 4:
+ORA-06550: line 4, column 18: 
+PLS-00103: Encountered the symbol "=" when expecting one of the following: 
+:= . ( @ % ; not null range default character 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  	vc_ln varchar2(20);
+  4  	vn_empno number := 150
+  5  BEGIN
+  6        	select first_name,last_name into vc_fn , vc_ln  
+  7        	from employees
+  8        	where employee_id = vn_empno;
+  9  	DBMS_OUTPUT.PUT_LINE(vc_fn ||' '|| vc_ln );
+ 10* END;
+SQL> /
+BEGIN
+*
+ERROR at line 5:
+ORA-06550: line 5, column 1: 
+PLS-00103: Encountered the symbol "BEGIN" when expecting one of the following: 
+* & = - + ; < / > at in is mod remainder not rem 
+<an exponent (**)> <> or != or ~= >= <= <> and or like LIKE2_ 
+LIKE4_ LIKEC_ between || multiset member SUBMULTISET_ 
+The symbol ";" was substituted for "BEGIN" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  	vc_ln varchar2(20);
+  4  	vn_empno number := 150;
+  5  BEGIN
+  6        	select first_name,last_name into vc_fn , vc_ln  
+  7        	from employees
+  8        	where employee_id = vn_empno;
+  9  	DBMS_OUTPUT.PUT_LINE(vc_fn ||' '|| vc_ln );
+ 10* END;
+SQL> /
+Peter Tucker                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  	vc_ln varchar2(20);
+  4  	vn_empno number := 150;
+  5  	vd_hd date;
+  6  BEGIN
+  7        	select first_name,last_name,hire_date into vc_fn , vc_ln, vd_hd
+  8        	from employees
+  9        	where employee_id = vn_empno;
+ 10  	DBMS_OUTPUT.PUT_LINE(vc_fn ||' '|| vc_ln ||' '|| vd_hd );
+ 11* END;
+SQL> /
+Peter Tucker 30-JAN-97                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn varchar2(10);
+  3  	vc_ln varchar2(20);
+  4  	vn_empno number := 150;
+  5  	vd_hd date;
+  6  	vn_com_pct number;
+  7  BEGIN
+  8        	select first_name,last_name,hire_date,COMMISSION_PCT into vc_fn , vc_ln, vd_hd,vn_com_pct 
+  9        	from employees
+ 10        	where employee_id = vn_empno;
+ 11  	DBMS_OUTPUT.PUT_LINE(vc_fn ||' '|| vc_ln ||' '|| vd_hd );
+ 12  	DBMS_OUTPUT.PUT_LINE('COMMISSION_PCT ' || vn_com_pct );
+ 13* END;
+SQL> /
+Peter Tucker 30-JAN-97                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+COMMISSION_PCT .3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn employees.first_name%type;
+  3  	vc_ln employees.last_name%type;
+  4  	vn_empno employees.employee_id%type := 150;
+  5  	vd_hd employees.hire_date%type;
+  6  	vn_com_pct employees.COMMISSION_PCT%type;
+  7  BEGIN
+  8        	select first_name,last_name,hire_date,COMMISSION_PCT into vc_fn , vc_ln, vd_hd,vn_com_pct 
+  9        	from employees
+ 10        	where employee_id = vn_empno;
+ 11  	DBMS_OUTPUT.PUT_LINE(vc_fn ||' '|| vc_ln ||' '|| vd_hd );
+ 12  	DBMS_OUTPUT.PUT_LINE('COMMISSION_PCT ' || vn_com_pct );
+ 13* END;
+SQL> /
+Peter Tucker 30-JAN-97                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+COMMISSION_PCT .3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn employees.first_name%type;
+  3  	vc_ln employees.last_name%type;
+  4  	vn_empno employees.employee_id%type := 150;
+  5  	vd_hd employees.hire_date%type;
+  6  	vn_com_pct employees.COMMISSION_PCT%type;
+  7  	v_mID employees.MANAGER_ID%type;
+  8  	v_dID employees.DEPARTMENT_ID%type;
+  9  BEGIN
+ 10        	select first_name,last_name,hire_date,COMMISSION_PCT,MANAGER_ID, DEPARTMENT_ID 
+ 11  	into vc_fn , vc_ln, vd_hd,vn_com_pct,mID,dID 
+ 12        	from employees
+ 13        	where employee_id = vn_empno;
+ 14  	DBMS_OUTPUT.PUT_LINE(vc_fn ||' '|| vc_ln ||' '|| vd_hd );
+ 15  	DBMS_OUTPUT.PUT_LINE('COMMISSION_PCT ' || vn_com_pct );
+ 16  	DBMS_OUTPUT.PUT_LINE('MANAGER_ID ' || v_mID );
+ 17  	DBMS_OUTPUT.PUT_LINE('DEPARTMENT_ID ' || v_dID );
+ 18* END;
+ 19  /
+	into vc_fn , vc_ln, vd_hd,vn_com_pct,mID,dID 
+	                                     *
+ERROR at line 11:
+ORA-06550: line 11, column 39: 
+PLS-00201: identifier 'MID' must be declared 
+ORA-06550: line 12, column 8: 
+PL/SQL: ORA-00904: : invalid identifier 
+ORA-06550: line 10, column 8: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         	vc_fn employees.first_name%type;
+  3  	vc_ln employees.last_name%type;
+  4  	vn_empno employees.employee_id%type := 150;
+  5  	vd_hd employees.hire_date%type;
+  6  	vn_com_pct employees.COMMISSION_PCT%type;
+  7  	v_mID employees.MANAGER_ID%type;
+  8  	v_dID employees.DEPARTMENT_ID%type;
+  9  BEGIN
+ 10        	select first_name,last_name,hire_date,COMMISSION_PCT,MANAGER_ID, DEPARTMENT_ID 
+ 11  	into vc_fn , vc_ln, vd_hd,vn_com_pct,v_mID,v_dID 
+ 12        	from employees
+ 13        	where employee_id = vn_empno;
+ 14  	DBMS_OUTPUT.PUT_LINE(vc_fn ||' '|| vc_ln ||' '|| vd_hd );
+ 15  	DBMS_OUTPUT.PUT_LINE('COMMISSION_PCT ' || vn_com_pct );
+ 16  	DBMS_OUTPUT.PUT_LINE('MANAGER_ID ' || v_mID );
+ 17  	DBMS_OUTPUT.PUT_LINE('DEPARTMENT_ID ' || v_dID );
+ 18* END;
+SQL> /
+Peter Tucker 30-JAN-97                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+COMMISSION_PCT .3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+MANAGER_ID 145                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+DEPARTMENT_ID 80                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         /*	vc_fn 		employees.first_name%type;
+  3  	vc_ln 		employees.last_name%type;
+  4  	vn_empno 	employees.employee_id%type := 150;
+  5  	vd_hd 		employees.hire_date%type;
+  6  	vn_com_pct 	employees.COMMISSION_PCT%type;
+  7  	v_mID 		employees.MANAGER_ID%type;
+  8  	v_dID 		employees.DEPARTMENT_ID%type;*/
+  9  	vrec_emp 	employees%ROWTYPE;
+ 10  BEGIN
+ 11  	vrec_emp.employee_id := 150;
+ 12        	select 	first_name,
+ 13  		last_name,
+ 14  		hire_date,
+ 15  		COMMISSION_PCT,
+ 16  		MANAGER_ID, 
+ 17  		DEPARTMENT_ID 
+ 18  	into 	vrec_emp.first_name , 
+ 19  		vrec_emp.last_name , 
+ 20  		vrec_emp.hire_date ,
+ 21  		vrec_emp.commission_pct ,
+ 22  		vrec_emp.manager_id ,
+ 23  		vrec_emp.department_id  
+ 24        	from 	employees
+ 25        	where 	employee_id = vrec_emp.employee_id;
+ 26  	DBMS_OUTPUT.PUT_LINE(vrec_emp.first_name ||' '|| vrec_emp.last_name ||' '|| vrec_emp.hire_date );
+ 27  	DBMS_OUTPUT.PUT_LINE('COMMISSION_PCT ' || vrec_emp.commission_pct );
+ 28  	DBMS_OUTPUT.PUT_LINE('MANAGER_ID ' || vrec_emp.manager_id );
+ 29  	DBMS_OUTPUT.PUT_LINE('DEPARTMENT_ID ' || vrec_emp.department_id);
+ 30* END;
+ 31  /
+Peter Tucker 30-JAN-97                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+COMMISSION_PCT .3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+MANAGER_ID 145                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+DEPARTMENT_ID 80                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2         /*	vc_fn 		employees.first_name%type;
+  3  	vc_ln 		employees.last_name%type;
+  4  	vn_empno 	employees.employee_id%type := 150;
+  5  	vd_hd 		employees.hire_date%type;
+  6  	vn_com_pct 	employees.COMMISSION_PCT%type;
+  7  	v_mID 		employees.MANAGER_ID%type;
+  8  	v_dID 		employees.DEPARTMENT_ID%type;*/
+  9  	vrec_emp 	employees%ROWTYPE;
+ 10  BEGIN
+ 11  	vrec_emp.employee_id := 150;
+ 12        	select 	*
+ 13  	into 	vrec_emp 
+ 14        	from 	employees
+ 15        	where 	employee_id = vrec_emp.employee_id;
+ 16  	DBMS_OUTPUT.PUT_LINE(vrec_emp.first_name ||' '|| vrec_emp.last_name ||' '|| vrec_emp.hire_date );
+ 17  	DBMS_OUTPUT.PUT_LINE('COMMISSION_PCT ' || vrec_emp.commission_pct );
+ 18  	DBMS_OUTPUT.PUT_LINE('MANAGER_ID ' || vrec_emp.manager_id );
+ 19  	DBMS_OUTPUT.PUT_LINE('DEPARTMENT_ID ' || vrec_emp.department_id);
+ 20* END;
+SQL> /
+Peter Tucker 30-JAN-97                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+COMMISSION_PCT .3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+MANAGER_ID 145                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+DEPARTMENT_ID 80                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> spool off
