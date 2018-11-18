@@ -1,0 +1,1401 @@
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--vrec_emp.department_id := 10;
+  5        	select 	*
+  6  	into 	vrec_emp 
+  7        	from 	departments
+  8        	where 	department_id = vrec_emp.employee_id;
+  9  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 10* END;
+ 11  /
+      	where 	department_id = vrec_emp.employee_id;
+      	      	                *
+ERROR at line 8:
+ORA-06550: line 8, column 31: 
+PL/SQL: ORA-00904: "VREC_EMP"."EMPLOYEE_ID": invalid identifier 
+ORA-06550: line 5, column 8: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--vrec_emp.department_id := 10;
+  5        	select 	*
+  6  	into 	vrec_emp 
+  7        	from 	departments
+  8        	where 	department_id = vrec_emp.department_id;
+  9  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 10* END;
+SQL> /
+      	where 	department_id = vrec_emp.department_id;
+      	      	                *
+ERROR at line 8:
+ORA-06550: line 8, column 31: 
+PL/SQL: ORA-00904: "VREC_EMP"."DEPARTMENT_ID": invalid identifier 
+ORA-06550: line 5, column 8: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--vrec_emp.department_id := 10;
+  5        	select 	*
+  6  	into 	vrec_emp 
+  7        	from 	departments
+  8        	where 	department_id = vrec_dept.department_id;
+  9  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 10* END;
+SQL> /
+	into 	vrec_emp 
+	     	*
+ERROR at line 6:
+ORA-06550: line 6, column 8: 
+PLS-00201: identifier 'VREC_EMP' must be declared 
+ORA-06550: line 7, column 8: 
+PL/SQL: ORA-00904: : invalid identifier 
+ORA-06550: line 5, column 8: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--vrec_emp.department_id := 10;
+  5        	select 	*
+  6  	into 	vrec_dept 
+  7        	from 	departments
+  8        	where 	department_id = vrec_dept.department_id;
+  9  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 10* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 5 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	vrec_emp.department_id := 10;
+  5        	select 	*
+  6  	into 	vrec_dept 
+  7        	from 	departments
+  8        	where 	department_id = vrec_dept.department_id;
+  9  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 10* END;
+SQL> /
+	vrec_emp.department_id := 10;
+	*
+ERROR at line 4:
+ORA-06550: line 4, column 2: 
+PLS-00201: identifier 'VREC_EMP.DEPARTMENT_ID' must be declared 
+ORA-06550: line 4, column 2: 
+PL/SQL: Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	vrec_dept.department_id := 10;
+  5        	select 	*
+  6  	into 	vrec_dept 
+  7        	from 	departments
+  8        	where 	department_id = vrec_dept.department_id;
+  9  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 10* END;
+SQL> /
+Administration 200 1700                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--assign to dept_id is to 10
+  5  	vrec_dept.department_id := 10;
+  6        	select 	*
+  7  	into 	vrec_dept 
+  8        	from 	departments;
+  9        	--where 	department_id = vrec_dept.department_id;
+ 10  	/*here shown the department name
+ 11  	manager_id and location_id*/
+ 12  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 13* END;
+ 14  /
+DECLARE
+*
+ERROR at line 1:
+ORA-01422: exact fetch returns more than requested number of rows 
+ORA-06512: at line 6 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--assign to dept_id is to 10
+  5  	vrec_dept.department_id := 1000;
+  6        	select 	*
+  7  	into 	vrec_dept 
+  8        	from 	departments
+  9        	where 	department_id = vrec_dept.department_id;
+ 10  	/*here shown the department name
+ 11  	manager_id and location_id*/
+ 12  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 13* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 6 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--assign to dept_id is to 10
+  5  	vrec_dept.department_id := 1000;
+  6        	select 	*
+  7  	into 	vrec_dept 
+  8        	from 	departments
+  9        	where 	/*department_id = vrec_dept.department_id;*/ first_name = 'peter';
+ 10  	/*here shown the department name
+ 11  	manager_id and location_id*/
+ 12  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 13* END;
+SQL> /
+      	where 	/*department_id = vrec_dept.department_id;*/ first_name = 'peter';
+      	      	                                             *
+ERROR at line 9:
+ORA-06550: line 9, column 60: 
+PL/SQL: ORA-00904: "FIRST_NAME": invalid identifier 
+ORA-06550: line 6, column 8: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--assign to dept_id is to 10
+  5  	vrec_dept.department_id := 1000;
+  6        	select 	*
+  7  	into 	vrec_dept 
+  8        	from 	departments
+  9        	where 	department_name = 'ITPROGs'; 
+ 10  	/*here shown the department name
+ 11  	manager_id and location_id*/
+ 12  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 13* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 6 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--assign to dept_id is to 10
+  5  	vrec_dept.department_id := 1000;
+  6        	select 	*
+  7  	into 	vrec_dept 
+  8        	from 	departments
+  9        	where 	department_name = 'operators'; 
+ 10  	/*here shown the department name
+ 11  	manager_id and location_id*/
+ 12  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 13* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 6 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--assign to dept_id is to 10
+  5  	vrec_dept.department_id := 1000;
+  6        	select 	*
+  7  	into 	vrec_dept 
+  8        	from 	departments
+  9        	where 	lower(department_name) = 'operators'; 
+ 10  	/*here shown the department name
+ 11  	manager_id and location_id*/
+ 12  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 13* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 6 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vrec_dept 	departments%ROWTYPE;
+  3  BEGIN
+  4  	--assign to dept_id is to 10
+  5  	vrec_dept.department_id := 1000;
+  6        	select 	*
+  7  	into 	vrec_dept 
+  8        	from 	departments
+  9        	where 	lower(department_name) = 'operations'; 
+ 10  	/*here shown the department name
+ 11  	manager_id and location_id*/
+ 12  	DBMS_OUTPUT.PUT_LINE(vrec_dept.department_name ||' '|| vrec_dept.manager_id ||' '|| vrec_dept.location_id );
+ 13* END;
+SQL> /
+Operations  1700                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vd_today 	varchar2(50);
+  3  BEGIN
+  4        	vd_today:=to_char(sysdate,'YYYY MONTH DD');
+  5  	DBMS_OUTPUT.PUT_LINE(vd_today);
+  6* END;
+  7  /
+2018 NOVEMBER  17                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vd_today 	varchar2(50);
+  3  BEGIN
+  4        	vd_today:=to_char(sysdate,'YYYY MONTH DAY');
+  5  	DBMS_OUTPUT.PUT_LINE(vd_today);
+  6* END;
+SQL> /
+2018 NOVEMBER  SATURDAY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vd_today 	varchar2(50);
+  3  BEGIN
+  4        	vd_today:=to_char(sysdate,'YYYY MONTH DDSPTH');
+  5  	DBMS_OUTPUT.PUT_LINE(vd_today);
+  6* END;
+SQL> /
+2018 NOVEMBER  SEVENTEENTH                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_salary 	employees.salary%type;
+  3  	vn_dept 	employees.department_id%type;
+  4  BEGIN
+  5  	vn_dept = 10;
+  6       	select sum(salary) into vn_salary
+  7  	from employees
+  8  	group by department_id
+  9  	having deparment_id = vn_dept;
+ 10  	dbms_output.put_line(vn_dept);
+ 11* END;
+ 12  /
+	vn_dept = 10;
+	        *
+ERROR at line 5:
+ORA-06550: line 5, column 10: 
+PLS-00103: Encountered the symbol "=" when expecting one of the following: 
+:= . ( @ % ; 
+The symbol ":= was inserted before "=" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_salary 	employees.salary%type;
+  3  	vn_dept 	employees.department_id%type;
+  4  BEGIN
+  5  	vn_dept := 10;
+  6       	select sum(salary) into vn_salary
+  7  	from employees
+  8  	group by department_id
+  9  	having deparment_id = vn_dept;
+ 10  	dbms_output.put_line(vn_dept);
+ 11* END;
+SQL> /
+	having deparment_id = vn_dept;
+	       *
+ERROR at line 9:
+ORA-06550: line 9, column 9: 
+PL/SQL: ORA-00904: "DEPARMENT_ID": invalid identifier 
+ORA-06550: line 6, column 7: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_salary 	employees.salary%type;
+  3  	vn_dept 	employees.department_id%type;
+  4  BEGIN
+  5  	vn_dept := 10;
+  6       	select sum(salary) into vn_salary
+  7  	from employees
+  8  	group by department_id
+  9  	having department_id = vn_dept;
+ 10  	dbms_output.put_line(vn_dept);
+ 11* END;
+SQL> /
+10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_salary 	employees.salary%type;
+  3  	vn_dept 	employees.department_id%type;
+  4  BEGIN
+  5  	vn_dept := 10;
+  6       	select sum(salary) into vn_salary
+  7  	from employees
+  8  	group by department_id
+  9  	having department_id = vn_dept;
+ 10  	dbms_output.put_line(vn_salary);
+ 11* END;
+SQL> /
+4400                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_salary 	employees.salary%type;
+  3  	vn_dept 	employees.department_id%type;
+  4  BEGIN
+  5  	vn_dept := 10;
+  6       	select sum(salary) into vn_salary
+  7  	from employees
+  8  	group by department_id
+  9  	having department_id = vn_dept;
+ 10  	dbms_output.put_line(vn_salary);
+ 11* END;
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  BEGIN
+  5  	vn_dept := 10;
+  6       	select 		max(trunc((sysdate-hire_date)/356)) into vn_maxday
+  7  	from 		employees
+  8  	dbms_output.put_line(vn_maxday);
+  9* END;
+ 10  /
+	dbms_output.put_line(vn_maxday);
+	           *
+ERROR at line 8:
+ORA-06550: line 8, column 13: 
+PL/SQL: ORA-00933: SQL command not properly ended 
+ORA-06550: line 6, column 7: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  BEGIN
+  5  	vn_dept := 10;
+  6       	select 		max(trunc((sysdate-hire_date)/356)) into vn_maxday
+  7  	from 		employees;
+  8  	dbms_output.put_line(vn_maxday);
+  9* END;
+SQL> /
+32                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5)
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(trunc((sysdate-hire_date)/356)) into vn_maxday
+ 11  	from 		employees;
+ 12  	select 		emp.first_name,
+ 13  			dept.department_name,
+ 14  			emp.hire_date,
+ 15  			trunc((sysdate-emp.hire_date)/356) as service
+ 16  	into		vc_fn,
+ 17  			vc_dn,
+ 18  			vd_hd,
+ 19  			vn_service
+ 20  	from 		employees emp, 
+ 21  			departments dept 
+ 22  	where 		emp.department_id = dept.department_id and emp.department_id = vn_dept and
+ 23  			trunc((sysdate-emp.hire_date)/356) = vn_maxday;
+ 24  	dbms_output.put_line(vn_maxday);
+ 25* END;
+ 26  /
+BEGIN
+*
+ERROR at line 8:
+ORA-06550: line 8, column 1: 
+PLS-00103: Encountered the symbol "BEGIN" when expecting one of the following: 
+:= ; not null default character 
+The symbol ";" was substituted for "BEGIN" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(trunc((sysdate-hire_date)/356)) into vn_maxday
+ 11  	from 		employees;
+ 12  	select 		emp.first_name,
+ 13  			dept.department_name,
+ 14  			emp.hire_date,
+ 15  			trunc((sysdate-emp.hire_date)/356) as service
+ 16  	into		vc_fn,
+ 17  			vc_dn,
+ 18  			vd_hd,
+ 19  			vn_service
+ 20  	from 		employees emp, 
+ 21  			departments dept 
+ 22  	where 		emp.department_id = dept.department_id and emp.department_id = vn_dept and
+ 23  			trunc((sysdate-emp.hire_date)/356) = vn_maxday;
+ 24  	dbms_output.put_line(vn_maxday);
+ 25* END;
+ 26  /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 12 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(trunc((sysdate-hire_date)/356)) into vn_maxday
+ 11  	from 		employees;
+ 12  	select 		emp.first_name,
+ 13  			dept.department_name,
+ 14  			emp.hire_date,
+ 15  			trunc((sysdate-emp.hire_date)/356) as service
+ 16  	into		vc_fn,
+ 17  			vc_dn,
+ 18  			vd_hd,
+ 19  			vn_service
+ 20  	from 		employees emp, 
+ 21  			departments dept 
+ 22  	where 		emp.department_id = dept.department_id
+ 23  	group by 	emp.department_id
+ 24  	having 		trunc((sysdate-emp.hire_date)/356) = vn_maxday and 
+ 25  			emp.department_id = vn_dept;
+ 26  	dbms_output.put_line(vn_maxday);
+ 27* END;
+ 28  /
+DECLARE
+*
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+ORA-06512: at line 12 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(trunc((sysdate-hire_date)/356)) into vn_maxday
+ 11  	from 		employees;
+ 12  	select 		emp.first_name,
+ 13  			dept.department_name,
+ 14  			emp.hire_date,
+ 15  			trunc((sysdate-emp.hire_date)/356) as service
+ 16  	into		vc_fn,
+ 17  			vc_dn,
+ 18  			vd_hd,
+ 19  			vn_service
+ 20  	from 		employees emp, 
+ 21  			departments dept 
+ 22  	where 		emp.department_id = dept.department_id and 
+ 23  			trunc((sysdate-emp.hire_date)/356) = vn_maxday and
+ 24  			emp.department_id = vn_dept;
+ 25  	dbms_output.put_line(vn_maxday);
+ 26* END;
+ 27  /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 12 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(trunc((sysdate-hire_date)/356)) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		emp.first_name,
+ 14  			dept.department_name,
+ 15  			emp.hire_date,
+ 16  			trunc((sysdate-emp.hire_date)/356) as service
+ 17  	into		vc_fn,
+ 18  			vc_dn,
+ 19  			vd_hd,
+ 20  			vn_service
+ 21  	from 		employees emp, 
+ 22  			departments dept 
+ 23  	where 		emp.department_id = dept.department_id and 
+ 24  			trunc((sysdate-emp.hire_date)/356) = vn_maxday;
+ 25  	dbms_output.put_line(vn_maxday);
+ 26* END;
+ 27  /
+31                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(trunc((sysdate-hire_date)/356)) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		emp.first_name,
+ 14  			dept.department_name,
+ 15  			emp.hire_date,
+ 16  			trunc((sysdate-emp.hire_date)/356) as service
+ 17  	into		vc_fn,
+ 18  			vc_dn,
+ 19  			vd_hd,
+ 20  			vn_service
+ 21  	from 		employees emp, 
+ 22  			departments dept 
+ 23  	where 		emp.department_id = dept.department_id and 
+ 24  			trunc((sysdate-emp.hire_date)/356) = vn_maxday;
+ 25  	dbms_output.put_line(vc_fn ||' ' || vc_dn || ' '||vd_hd||' '||vn_sevice);
+ 26* END;
+SQL> /
+	dbms_output.put_line(vc_fn ||' ' || vc_dn || ' '||vd_hd||' '||vn_sevice);
+	                                                              *
+ERROR at line 25:
+ORA-06550: line 25, column 64: 
+PLS-00201: identifier 'VN_SEVICE' must be declared 
+ORA-06550: line 25, column 2: 
+PL/SQL: Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(trunc((sysdate-hire_date)/356)) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		emp.first_name,
+ 14  			dept.department_name,
+ 15  			emp.hire_date,
+ 16  			trunc((sysdate-emp.hire_date)/356) as service
+ 17  	into		vc_fn,
+ 18  			vc_dn,
+ 19  			vd_hd,
+ 20  			vn_service
+ 21  	from 		employees emp, 
+ 22  			departments dept 
+ 23  	where 		emp.department_id = dept.department_id and 
+ 24  			trunc((sysdate-emp.hire_date)/356) = vn_maxday;
+ 25  	dbms_output.put_line(vc_fn ||' ' || vc_dn || ' '||vd_hd||' '||vn_service);
+ 26* END;
+SQL> /
+Jennifer Administration 17-SEP-87 31                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 100;
+ 10       	select 		max(trunc((sysdate-hire_date)/356)) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		emp.first_name,
+ 14  			dept.department_name,
+ 15  			emp.hire_date,
+ 16  			trunc((sysdate-emp.hire_date)/356) as service
+ 17  	into		vc_fn,
+ 18  			vc_dn,
+ 19  			vd_hd,
+ 20  			vn_service
+ 21  	from 		employees emp, 
+ 22  			departments dept 
+ 23  	where 		emp.department_id = dept.department_id and 
+ 24  			trunc((sysdate-emp.hire_date)/356) = vn_maxday;
+ 25  	dbms_output.put_line(vc_fn ||' ' || vc_dn || ' '||vd_hd||' '||vn_service);
+ 26* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01422: exact fetch returns more than requested number of rows 
+ORA-06512: at line 13 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 100;
+ 10       	select 		max(((sysdate-hire_date)/356)) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		emp.first_name,
+ 14  			dept.department_name,
+ 15  			emp.hire_date,
+ 16  			trunc((sysdate-emp.hire_date)/356) as service
+ 17  	into		vc_fn,
+ 18  			vc_dn,
+ 19  			vd_hd,
+ 20  			vn_service
+ 21  	from 		employees emp, 
+ 22  			departments dept 
+ 23  	where 		emp.department_id = dept.department_id and 
+ 24  			((sysdate-emp.hire_date)/356) = vn_maxday;
+ 25  	dbms_output.put_line(vc_fn ||' ' || vc_dn || ' '||vd_hd||' '||vn_service);
+ 26* END;
+ 27  /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 13 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 100;
+ 10       	select 		max(((sysdate-hire_date))) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		emp.first_name,
+ 14  			dept.department_name,
+ 15  			emp.hire_date,
+ 16  			trunc((sysdate-emp.hire_date)/356) as service
+ 17  	into		vc_fn,
+ 18  			vc_dn,
+ 19  			vd_hd,
+ 20  			vn_service
+ 21  	from 		employees emp, 
+ 22  			departments dept 
+ 23  	where 		emp.department_id = dept.department_id and 
+ 24  			((sysdate-emp.hire_date)) = vn_maxday;
+ 25  	dbms_output.put_line(vc_fn ||' ' || vc_dn || ' '||vd_hd||' '||vn_service);
+ 26* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 13 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(((sysdate-hire_date))) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		emp.first_name,
+ 14  			dept.department_name,
+ 15  			emp.hire_date,
+ 16  			trunc((sysdate-emp.hire_date)/356) as service
+ 17  	into		vc_fn,
+ 18  			vc_dn,
+ 19  			vd_hd,
+ 20  			vn_service
+ 21  	from 		employees emp, 
+ 22  			departments dept 
+ 23  	where 		emp.department_id = dept.department_id and 
+ 24  			((sysdate-emp.hire_date)) = vn_maxday;
+ 25  	dbms_output.put_line(vc_fn ||' ' || vc_dn || ' '||vd_hd||' '||vn_service);
+ 26* END;
+ 27  /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 13 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(((sysdate-hire_date))) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		emp.first_name,
+ 14  			dept.department_name,
+ 15  			emp.hire_date,
+ 16  			trunc((sysdate-emp.hire_date)/356) as service
+ 17  	into		vc_fn,
+ 18  			vc_dn,
+ 19  			vd_hd,
+ 20  			vn_service
+ 21  	from 		employees emp, 
+ 22  			departments dept 
+ 23  	where 		emp.department_id = dept.department_id and 
+ 24  			((sysdate-emp.hire_date)) = vn_maxday and 
+ 25  			department_id = vn_dept;
+ 26  	dbms_output.put_line(vc_fn ||' ' || vc_dn || ' '||vd_hd||' '||vn_service);
+ 27* END;
+ 28  /
+			department_id = vn_dept;
+			*
+ERROR at line 25:
+ORA-06550: line 25, column 4: 
+PL/SQL: ORA-00918: column ambiguously defined 
+ORA-06550: line 13, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(((sysdate-hire_date))) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		emp.first_name,
+ 14  			dept.department_name,
+ 15  			emp.hire_date,
+ 16  			trunc((sysdate-emp.hire_date)/356) as service
+ 17  	into		vc_fn,
+ 18  			vc_dn,
+ 19  			vd_hd,
+ 20  			vn_service
+ 21  	from 		employees emp, 
+ 22  			departments dept 
+ 23  	where 		emp.department_id = dept.department_id and 
+ 24  			((sysdate-emp.hire_date)) = vn_maxday and 
+ 25  			emp.department_id = vn_dept;
+ 26  	dbms_output.put_line(vc_fn ||' ' || vc_dn || ' '||vd_hd||' '||vn_service);
+ 27* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 13 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(((sysdate-hire_date))) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		first_name,
+ 14  			hire_date,
+ 15  			trunc((sysdate-emp.hire_date)/356) as service
+ 16  	into		vc_fn,
+ 17  			vd_hd,
+ 18  			vn_service
+ 19  	from 		employees
+ 20  	where 		((sysdate-emp.hire_date)) = vn_maxday and 
+ 21  			emp.department_id = vn_dept;
+ 22  	dbms_output.put_line(vc_fn ||' ' || ''|| ' '||vd_hd||' '||vn_service);
+ 23* END;
+ 24  /
+			emp.department_id = vn_dept;
+			*
+ERROR at line 21:
+ORA-06550: line 21, column 4: 
+PL/SQL: ORA-00904: "EMP"."DEPARTMENT_ID": invalid identifier 
+ORA-06550: line 13, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number(5);
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(((sysdate-hire_date))) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		first_name,
+ 14  			hire_date,
+ 15  			trunc((sysdate-hire_date)/356) as service
+ 16  	into		vc_fn,
+ 17  			vd_hd,
+ 18  			vn_service
+ 19  	from 		employees
+ 20  	where 		((sysdate-hire_date)) = vn_maxday and 
+ 21  			department_id = vn_dept;
+ 22  	dbms_output.put_line(vc_fn ||' ' || ''|| ' '||vd_hd||' '||vn_service);
+ 23* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 13 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number;
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 10;
+ 10       	select 		max(((sysdate-hire_date))) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		first_name,
+ 14  			hire_date,
+ 15  			trunc((sysdate-hire_date)/356) as service
+ 16  	into		vc_fn,
+ 17  			vd_hd,
+ 18  			vn_service
+ 19  	from 		employees
+ 20  	where 		((sysdate-hire_date)) = vn_maxday and 
+ 21  			department_id = vn_dept;
+ 22  	dbms_output.put_line(vc_fn ||' ' || ''|| ' '||vd_hd||' '||vn_service);
+ 23* END;
+ 24  /
+Jennifer  17-SEP-87 31                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number;
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vd_hd 		employees.hire_date%type;
+  7  	vn_service	number(5);
+  8  BEGIN
+  9  	vn_dept := 100;
+ 10       	select 		max(((sysdate-hire_date))) into vn_maxday
+ 11  	from 		employees
+ 12  	where		department_id = vn_dept;
+ 13  	select 		first_name,
+ 14  			hire_date,
+ 15  			trunc((sysdate-hire_date)/356) as service
+ 16  	into		vc_fn,
+ 17  			vd_hd,
+ 18  			vn_service
+ 19  	from 		employees
+ 20  	where 		((sysdate-hire_date)) = vn_maxday and 
+ 21  			department_id = vn_dept;
+ 22  	dbms_output.put_line(vc_fn ||' ' || ''|| ' '||vd_hd||' '||vn_service);
+ 23* END;
+SQL> /
+Daniel  16-AUG-94 24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number;
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vc_dID		departments.department_id%type;
+  7  	vd_hd 		employees.hire_date%type;
+  8  	vn_service	number(5);
+  9  BEGIN
+ 10  	vn_dept := 100;
+ 11  	--take the maxday and its department
+ 12       	select 		max(((sysdate-hire_date))),department_id into vn_maxday, vc_dID
+ 13  	from 		employees
+ 14  	where		department_id = vn_dept;
+ 15  	--get the first name, hire date and service
+ 16  	select 		first_name,
+ 17  			hire_date,
+ 18  			trunc((sysdate-hire_date)/356) as service
+ 19  	into		vc_fn,
+ 20  			vd_hd,
+ 21  			vn_service
+ 22  	from 		employees
+ 23  	where 		((sysdate-hire_date)) = vn_maxday and 
+ 24  			department_id = vn_dept;
+ 25  	--get department_name
+ 26  	select department_name into vc_dn
+ 27  	from departments
+ 28  	where department_id = vc_dID
+ 29  	dbms_output.put_line(vc_fn ||' ' || vc_dn|| ' '||vd_hd||' '||vn_service);
+ 30* END;
+ 31  /
+	dbms_output.put_line(vc_fn ||' ' || vc_dn|| ' '||vd_hd||' '||vn_service);
+	*
+ERROR at line 29:
+ORA-06550: line 29, column 2: 
+PL/SQL: ORA-00933: SQL command not properly ended 
+ORA-06550: line 26, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vn_maxday 	number;
+  3  	vn_dept 	employees.department_id%type;
+  4  	vc_fn 		employees.first_name%type;
+  5  	vc_dn		departments.department_name%type;
+  6  	vc_dID		departments.department_id%type;
+  7  	vd_hd 		employees.hire_date%type;
+  8  	vn_service	number(5);
+  9  BEGIN
+ 10  	vn_dept := 100;
+ 11  	--take the maxday and its department
+ 12       	select 		max(((sysdate-hire_date))),department_id into vn_maxday, vc_dID
+ 13  	from 		employees
+ 14  	where		department_id = vn_dept;
+ 15  	--get the first name, hire date and service
+ 16  	select 		first_name,
+ 17  			hire_date,
+ 18  			trunc((sysdate-hire_date)/356) as service
+ 19  	into		vc_fn,
+ 20  			vd_hd,
+ 21  			vn_service
+ 22  	from 		employees
+ 23  	where 		((sysdate-hire_date)) = vn_maxday and 
+ 24  			department_id = vn_dept;
+ 25  	--get department_name
+ 26  	select 		department_name into vc_dn
+ 27  	from 		departments
+ 28  	where 		department_id = vc_dID;
+ 29  	dbms_output.put_line(vc_fn ||' ' || vc_dn|| ' '||vd_hd||' '||vn_service);
+ 30* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+ORA-06512: at line 12 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line(sql%rowcount)
+  3  	update rasika_emp
+  4  	set first_name = 'rasika'
+  5  	where employee_id = 10;
+  6  	dbms_output.put_line(sql%rowcount)
+  7* end
+  8  /
+	update rasika_emp
+	*
+ERROR at line 3:
+ORA-06550: line 3, column 2: 
+PLS-00103: Encountered the symbol "UPDATE" when expecting one of the following: 
+:= . ( % ; 
+The symbol ";" was substituted for "UPDATE" to continue. 
+ORA-06550: line 7, column 1: 
+PLS-00103: Encountered the symbol "END" when expecting one of the following: 
+:= . ( % ; 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line(sql%rowcount);
+  3  	update rasika_emp
+  4  	set first_name = 'rasika'
+  5  	where employee_id = 10;
+  6  	dbms_output.put_line(sql%rowcount);
+  7* end
+SQL> /
+end
+  *
+ERROR at line 7:
+ORA-06550: line 7, column 3: 
+PLS-00103: Encountered the symbol "end-of-file" when expecting one of the following: 
+; <an identifier> <a double-quoted delimited-identifier> 
+The symbol ";" was substituted for "end-of-file" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line(sql%rowcount);
+  3  	update rasika_emp
+  4  	set first_name = 'rasika'
+  5  	where employee_id = 10;
+  6  	dbms_output.put_line(sql%rowcount);
+  7* end;
+SQL> /
+0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line(sql%rowcount);
+  3  	update rasika_emp
+  4  	set first_name = 'rasika'
+  5  	where department_id = 10;
+  6  	dbms_output.put_line(sql%rowcount);
+  7* end;
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line('b '||sql%rowcount);
+  3  	update rasika_emp
+  4  	set first_name = 'rasika'
+  5  	where department_id = 10;
+  6  	dbms_output.put_line('a ' ||sql%rowcount);
+  7* end;
+SQL> /
+b                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+a 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line('b '||sql%rowcount);
+  3  	update rasika_emp
+  4  	set first_name = 'rasika'
+  5  	where department_id = 100;
+  6  	dbms_output.put_line('a ' ||sql%rowcount);
+  7* end;
+SQL> /
+b                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+a 6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line('b '||sql%rowcount);
+  3  	delete rasika_emp
+  4  	where department_id = 10;
+  5  	dbms_output.put_line('a ' ||sql%rowcount);
+  6* end;
+SQL> /
+b                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+a 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line('b '||sql%rowcount);
+  3  	delete rasika_emp
+  4  	where department_id = 20;
+  5  	dbms_output.put_line('a ' ||sql%rowcount);
+  6* end;
+SQL> /
+b                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+a 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line('b '||sql%rowcount);
+  3  	delete rasika_emp
+  4  	where department_id = 50;
+  5  	dbms_output.put_line('a ' ||sql%rowcount);
+  6* end;
+SQL> /
+b                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+a 45                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line('b '||sql%rowcount);
+  3  	delete rasika_emp
+  4  	where department_id = 50;
+  5  	if sql%found then
+  6  		dbms_output.put_line('in if');
+  7  	else
+  8  		dbms_output.put_line('in else');
+  9  	end if;
+ 10* end;
+ 11  /
+b                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+in else                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line('b '||sql%rowcount);
+  3  	delete rasika_emp
+  4  	where department_id = 1000;
+  5  	if sql%found then
+  6  		dbms_output.put_line('in if');
+  7  	else
+  8  		dbms_output.put_line('in else');
+  9  	end if;
+ 10* end;
+SQL> /
+b                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+in else                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line('b '||sql%rowcount);
+  3  	delete rasika_emp
+  4  	where department_id = 100;
+  5  	if sql%found then
+  6  		dbms_output.put_line('in if');
+  7  	else
+  8  		dbms_output.put_line('in else');
+  9  	end if;
+ 10* end;
+SQL> /
+b                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+in if                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  begin
+  2  	dbms_output.put_line('b '||sql%rowcount);
+  3  	delete from rasika_emp
+  4  	where department_id = 100;
+  5  	if sql%found then
+  6  		dbms_output.put_line('in if');
+  7  	else
+  8  		dbms_output.put_line('in else');
+  9  	end if;
+ 10* end;
+SQL> /
+b                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+in else                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+PL/SQL procedure successfully completed.
+
+SQL> spool off
