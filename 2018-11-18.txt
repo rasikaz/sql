@@ -1,0 +1,1252 @@
+SQL> select * from employees
+  2  where 1=0;
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			TRUNC((SYSDATE-hire_date)/365)
+ 13  	INTO		vc_fn,
+ 14  			vn_os,
+ 15  			vn_service
+ 16  	FROM		employees
+ 17  	WHERE 		employee_id = vn_eID;
+ 18  -- get the new salary
+ 19  	IF vn_service > 25 THEN
+ 20  		vn_ns := vn_os*1.25; 
+ 21  	ELSIF vn_service > 20 THEN
+ 22  		vn_ns := vn_os*1.2;
+ 23  	ELSIF vn_service > 15 THEN
+ 24  		vn_ns := vn_os*1.15;
+ 25  	ELSIF vn_service > 10 THEN
+ 26  		vn_ns := vn_os*1.1;
+ 27  	ELSE
+ 28  		vn_ns := vn_os*1.05;
+ 29  	END IF;
+ 30  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 31* END;
+ 32  /
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on
+SQL> /
+FIRST NAME:Vance                                                                
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			TRUNC((SYSDATE-hire_date)/365)
+ 13  	INTO		vc_fn,
+ 14  			vn_os,
+ 15  			vn_service
+ 16  	FROM		employees
+ 17  	WHERE 		employee_id = vn_eID;
+ 18  -- get the new salary
+ 19  	/*IF vn_service > 25 THEN
+ 20  		vn_ns := vn_os*1.25; 
+ 21  	ELSIF vn_service > 20 THEN
+ 22  		vn_ns := vn_os*1.2;
+ 23  	ELSIF vn_service > 15 THEN
+ 24  		vn_ns := vn_os*1.15;
+ 25  	ELSIF vn_service > 10 THEN
+ 26  		vn_ns := vn_os*1.1;
+ 27  	ELSE
+ 28  		vn_ns := vn_os*1.05;
+ 29  	END IF;*/
+ 30  --using case statement
+ 31  	CASE 
+ 32  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 33  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 34  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 35  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 36  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 37  	END CASE;
+ 38  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 39  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 40* END;
+ 41  /
+ERROR:
+ORA-03114: not connected to ORACLE 
+
+
+DECLARE
+*
+ERROR at line 1:
+ORA-12571: TNS:packet writer failure 
+
+
+SQL> /
+ERROR:
+ORA-03114: not connected to ORACLE 
+
+
+SQL> /
+ERROR:
+ORA-03114: not connected to ORACLE 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			TRUNC((SYSDATE-hire_date)/365)
+ 13  	INTO		vc_fn,
+ 14  			vn_os,
+ 15  			vn_service
+ 16  	FROM		employees
+ 17  	WHERE 		employee_id = vn_eID;
+ 18  -- get the new salary
+ 19  	/*IF vn_service > 25 THEN
+ 20  		vn_ns := vn_os*1.25; 
+ 21  	ELSIF vn_service > 20 THEN
+ 22  		vn_ns := vn_os*1.2;
+ 23  	ELSIF vn_service > 15 THEN
+ 24  		vn_ns := vn_os*1.15;
+ 25  	ELSIF vn_service > 10 THEN
+ 26  		vn_ns := vn_os*1.1;
+ 27  	ELSE
+ 28  		vn_ns := vn_os*1.05;
+ 29  	END IF;*/
+ 30  --using case statement
+ 31  	CASE 
+ 32  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 33  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 34  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 35  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 36  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 37  	END CASE;
+ 38  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 39  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 40* END;
+SQL> /
+ERROR:
+ORA-03114: not connected to ORACLE 
+
+
+SQL> connect
+Enter user-name: PS2014041/PS2014041@IT
+Connected.
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			TRUNC((SYSDATE-hire_date)/365)
+ 13  	INTO		vc_fn,
+ 14  			vn_os,
+ 15  			vn_service
+ 16  	FROM		employees
+ 17  	WHERE 		employee_id = vn_eID;
+ 18  -- get the new salary
+ 19  	/*IF vn_service > 25 THEN
+ 20  		vn_ns := vn_os*1.25; 
+ 21  	ELSIF vn_service > 20 THEN
+ 22  		vn_ns := vn_os*1.2;
+ 23  	ELSIF vn_service > 15 THEN
+ 24  		vn_ns := vn_os*1.15;
+ 25  	ELSIF vn_service > 10 THEN
+ 26  		vn_ns := vn_os*1.1;
+ 27  	ELSE
+ 28  		vn_ns := vn_os*1.05;
+ 29  	END IF;*/
+ 30  --using case statement
+ 31  	CASE 
+ 32  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 33  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 34  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 35  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 36  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 37  	END CASE;
+ 38  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 39  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 40* END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on
+SQL> /
+FIRST NAME:Vance                                                                
+NEW SAL:3220                                                                    
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			CASE
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN vn_ns := vn_os*1.25
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN vn_ns := vn_os*1.2
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN vn_ns := vn_os*1.15
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN vn_ns := vn_os*1.1
+ 17  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN vn_ns := vn_os*1.05	
+ 18  			END
+ 19  	INTO		vc_fn,
+ 20  			vn_os,
+ 21  			vn_ns
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+ 47  /
+				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN vn_ns := vn_os*1.25
+				                                                    *
+ERROR at line 13:
+ORA-06550: line 13, column 57: 
+PL/SQL: ORA-00905: missing keyword 
+ORA-06550: line 10, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			CASE
+ 12  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN vn_ns := vn_os*1.25
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN vn_ns := vn_os*1.2
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN vn_ns := vn_os*1.15
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN vn_ns := vn_os*1.1
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN vn_ns := vn_os*1.05	
+ 17  			END,
+ 18  			salary,
+ 19  	INTO		vc_fn,
+ 20  			vn_ns,
+ 21  			vn_os
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN vn_ns := vn_os*1.25
+				                                                    *
+ERROR at line 12:
+ORA-06550: line 12, column 57: 
+PL/SQL: ORA-00905: missing keyword 
+ORA-06550: line 10, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			CASE
+ 12  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN vn_ns = vn_os*1.25
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN vn_ns := vn_os*1.2
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN vn_ns := vn_os*1.15
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN vn_ns := vn_os*1.1
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN vn_ns := vn_os*1.05	
+ 17  			END,
+ 18  			salary,
+ 19  	INTO		vc_fn,
+ 20  			vn_ns,
+ 21  			vn_os
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN vn_ns = vn_os*1.25
+				                                                    *
+ERROR at line 12:
+ORA-06550: line 12, column 57: 
+PL/SQL: ORA-00905: missing keyword 
+ORA-06550: line 10, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			CASE
+ 12  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  vn_os*1.25
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.2
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  vn_os*1.15
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  vn_os*1.1
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.05	
+ 17  			END,
+ 18  			salary,
+ 19  	INTO		vc_fn,
+ 20  			vn_ns,
+ 21  			vn_os
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+	INTO		vc_fn,
+	*
+ERROR at line 19:
+ORA-06550: line 19, column 2: 
+PL/SQL: ORA-00936: missing expression 
+ORA-06550: line 10, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			CASE
+ 12  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  vn_os*1.25
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.2
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  vn_os*1.15
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  vn_os*1.1
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.05	
+ 17  			END,
+ 18  			salary
+ 19  	INTO		vc_fn,
+ 20  			vn_ns,
+ 21  			vn_os
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+FIRST NAME:Vance                                                                
+NEW SAL:                                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			CASE
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  vn_os*1.25
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.2
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  vn_os*1.15
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  vn_os*1.1
+ 17  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.05	
+ 18  			END,
+ 19  	INTO		vc_fn,
+ 20  			vn_os,
+ 21  			vn_ns
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+ 47  /
+	INTO		vc_fn,
+	*
+ERROR at line 19:
+ORA-06550: line 19, column 2: 
+PL/SQL: ORA-00936: missing expression 
+ORA-06550: line 10, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			CASE
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  vn_os*1.25
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.2
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  vn_os*1.15
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  vn_os*1.1
+ 17  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.05	
+ 18  			END
+ 19  	INTO		vc_fn,
+ 20  			vn_os,
+ 21  			vn_ns
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+FIRST NAME:Vance                                                                
+NEW SAL:                                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			CASE
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  vn_os*1.25
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.2
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  vn_os*1.15
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  vn_os*1.1
+ 17  				WHEN TRUNC((SYSDATE-hire_date)/365) <= 10 THEN  vn_os*1.05	
+ 18  			END
+ 19  	INTO		vc_fn,
+ 20  			vn_os,
+ 21  			vn_ns
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+FIRST NAME:Vance                                                                
+NEW SAL:                                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			CASE
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  vn_os*1.25
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.2
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  vn_os*1.15
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  vn_os*1.1
+ 17  				ELSE  vn_os*1.05	
+ 18  			END
+ 19  	INTO		vc_fn,
+ 20  			vn_os,
+ 21  			vn_ns
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+ERROR:
+ORA-03114: not connected to ORACLE 
+
+
+DECLARE
+*
+ERROR at line 1:
+ORA-12571: TNS:packet writer failure 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		EMPLOYEES.SALARY%TYPE;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			CASE
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  vn_os*1.25
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.2
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  vn_os*1.15
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  vn_os*1.1
+ 17  				ELSE  vn_os*1.05	
+ 18  			END
+ 19  	INTO		vc_fn,
+ 20  			vn_os,
+ 21  			vn_ns
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+ERROR:
+ORA-03114: not connected to ORACLE 
+
+
+SQL> CONNECT
+Enter user-name: ps2014041/ps2014041@it
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+SQL> /
+SP2-0640: Not connected
+SQL> CONNECT
+Enter user-name: PS2014041/PS2014041@IT
+Connected.
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON
+SQL> /
+FIRST NAME:Vance                                                                
+NEW SAL:                                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		/*EMPLOYEES.SALARY%TYPE;*/NUMBER;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			CASE
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  vn_os*1.25
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  vn_os*1.2
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  vn_os*1.15
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  vn_os*1.1
+ 17  				ELSE  vn_os*1.05	
+ 18  			END
+ 19  	INTO		vc_fn,
+ 20  			vn_os,
+ 21  			vn_ns
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+FIRST NAME:Vance                                                                
+NEW SAL:                                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		/*EMPLOYEES.SALARY%TYPE;*/NUMBER;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			CASE
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  salary*1.25
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  salary*1.2
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  salary*1.15
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  salary*1.1
+ 17  				ELSE  vn_os*1.05	
+ 18  			END
+ 19  	INTO		vc_fn,
+ 20  			vn_os,
+ 21  			vn_ns
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		/*EMPLOYEES.SALARY%TYPE;*/NUMBER;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			CASE
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  salary*1.25
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  salary*1.2
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  salary*1.15
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  salary*1.1
+ 17  				ELSE  salary*1.05	
+ 18  			END
+ 19  	INTO		vc_fn,
+ 20  			vn_os,
+ 21  			vn_ns
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+FIRST NAME:Vance                                                                
+NEW SAL:3220                                                                    
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn 		VARCHAR2(20);
+  3  	vn_service 	NUMBER;
+  4  	vn_os		EMPLOYEES.SALARY%TYPE;
+  5  	vn_ns		/*EMPLOYEES.SALARY%TYPE;*/NUMBER;
+  6  	vn_eID		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  7  BEGIN
+  8  	vn_eID := 195;
+  9  -- FETCH THE DATA ASSIGN
+ 10  	SELECT 		first_name, 
+ 11  			salary,
+ 12  			CASE
+ 13  				WHEN TRUNC((SYSDATE-hire_date)/365) > 25 THEN  salary*1.25
+ 14  				WHEN TRUNC((SYSDATE-hire_date)/365) > 20 THEN  salary*1.2
+ 15  				WHEN TRUNC((SYSDATE-hire_date)/365) > 15 THEN  salary*1.15
+ 16  				WHEN TRUNC((SYSDATE-hire_date)/365) > 10 THEN  salary*1.1
+ 17  				ELSE  salary*1.05	
+ 18  			END
+ 19  	INTO		vc_fn,
+ 20  			vn_os,
+ 21  			vn_ns
+ 22  	FROM		employees
+ 23  	WHERE 		employee_id = vn_eID;
+ 24  -- get the new salary
+ 25  	/*IF vn_service > 25 THEN
+ 26  		vn_ns := vn_os*1.25; 
+ 27  	ELSIF vn_service > 20 THEN
+ 28  		vn_ns := vn_os*1.2;
+ 29  	ELSIF vn_service > 15 THEN
+ 30  		vn_ns := vn_os*1.15;
+ 31  	ELSIF vn_service > 10 THEN
+ 32  		vn_ns := vn_os*1.1;
+ 33  	ELSE
+ 34  		vn_ns := vn_os*1.05;
+ 35  	END IF;*/
+ 36  --using case statement
+ 37  	/*CASE 
+ 38  		WHEN vn_service > 25 THEN vn_ns := vn_os*1.25;
+ 39  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.2;
+ 40  		WHEN vn_service > 15 THEN vn_ns := vn_os*1.15;
+ 41  		WHEN vn_service > 10 THEN vn_ns := vn_os*1.1;
+ 42  		WHEN vn_service > 20 THEN vn_ns := vn_os*1.05;
+ 43  	END CASE;*/
+ 44  	DBMS_OUTPUT.PUT_LINE('FIRST NAME:'||vc_fn);
+ 45  	DBMS_OUTPUT.PUT_LINE('NEW SAL:'||vn_ns);
+ 46* END;
+SQL> /
+FIRST NAME:Vance                                                                
+NEW SAL:3220                                                                    
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2   	v_n number=0;
+  3  BEGIN
+  4  	LOOP
+  5  		v_n:=v_n+1;
+  6  		DBMS_OUTPUT.PUT_LINE(v_n);
+  7  		EXIT WHEN v_n = 10;
+  8  	END LOOP;
+  9* END;
+ 10  /
+ 	v_n number=0;
+ 	          *
+ERROR at line 2:
+ORA-06550: line 2, column 13: 
+PLS-00103: Encountered the symbol "=" when expecting one of the following: 
+:= . ( @ % ; not null range default character 
+The symbol ":= was inserted before "=" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2   	v_n number;
+  3  BEGIN
+  4  	v_n :=0;
+  5  	LOOP
+  6  		v_n:=v_n+1;
+  7  		DBMS_OUTPUT.PUT_LINE(v_n);
+  8  		EXIT WHEN v_n = 10;
+  9  	END LOOP;
+ 10* END;
+SQL> /
+1                                                                               
+2                                                                               
+3                                                                               
+4                                                                               
+5                                                                               
+6                                                                               
+7                                                                               
+8                                                                               
+9                                                                               
+10                                                                              
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2   	v_n number;
+  3  BEGIN
+  4  	v_n :=11;
+  5  	LOOP
+  6  		v_n:=v_n-1;
+  7  		DBMS_OUTPUT.PUT_LINE(v_n);
+  8  		EXIT WHEN v_n = 1;
+  9  	END LOOP;
+ 10* END;
+SQL> /
+10                                                                              
+9                                                                               
+8                                                                               
+7                                                                               
+6                                                                               
+5                                                                               
+4                                                                               
+3                                                                               
+2                                                                               
+1                                                                               
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2   	v_row number;
+  3  	v_col number;
+  4  BEGIN
+  5  	v_row := 0;
+  6  	v_col := 0;
+  7  	LOOP
+  8  		v_row := v_row+1;
+  9  		LOOP
+ 10  			v_col := v_col+1;
+ 11  			DBMS_OUTPUT.PUT(v_n);
+ 12  			EXIT WHEN v_col <= v_row;
+ 13  		END LOOP;
+ 14  		DBMS_OUTPUT.PUT_LINE();
+ 15  		EXIT WHEN v_row = 10;
+ 16  	END LOOP;
+ 17* END;
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2   	v_row number;
+  3  	v_col number;
+  4  BEGIN
+  5  	v_row := 0;
+  6  	v_col := 0;
+  7  	LOOP
+  8  		v_col := 0;
+  9  		v_row := v_row+1;
+ 10  		LOOP	
+ 11  			v_col := v_col+1;
+ 12  			DBMS_OUTPUT.PUT('*');
+ 13  			EXIT WHEN v_col = v_row;
+ 14  		END LOOP;
+ 15  		dbms_output.new_line;
+ 16  		EXIT WHEN v_row = 10;
+ 17  	END LOOP;
+ 18* END;
+SQL> /
+*                                                                               
+**                                                                              
+***                                                                             
+****                                                                            
+*****                                                                           
+******                                                                          
+*******                                                                         
+********                                                                        
+*********                                                                       
+**********                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2   	v_row number;
+  3  	v_col number;
+  4  	v_str varchar2(20);
+  5  BEGIN
+  6  	v_row := 0;
+  7  	v_col := 0;
+  8  	LOOP
+  9  		v_row := v_row+1;
+ 10  		LOOP
+ 11  			v_col := v_col+1;
+ 12  			v_str:=v_str||'*';
+ 13  			DBMS_OUTPUT.PUT_LINE(v_str);
+ 14  			EXIT WHEN v_col = v_row;
+ 15  		END LOOP;
+ 16  		EXIT WHEN v_row = 10;
+ 17  	END LOOP;
+ 18* END;
+SQL> /
+*                                                                               
+**                                                                              
+***                                                                             
+****                                                                            
+*****                                                                           
+******                                                                          
+*******                                                                         
+********                                                                        
+*********                                                                       
+**********                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2   	v_row number;
+  3  	v_col number;
+  4  	v_str varchar2(20);
+  5  BEGIN
+  6  	v_row := 0;
+  7  	v_col := 10;
+  8  	v_str := '**********';
+  9  	LOOP
+ 10  		v_row := v_row+1;
+ 11  		DBMS_OUTPUT.PUT_LINE(substr(v_str,1,v_col));
+ 12  		v_col := v_col-1;
+ 13  		EXIT WHEN v_row = 10;
+ 14  	END LOOP;
+ 15* END;
+SQL> /
+**********                                                                      
+*********                                                                       
+********                                                                        
+*******                                                                         
+******                                                                          
+*****                                                                           
+****                                                                            
+***                                                                             
+**                                                                              
+*                                                                               
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2   	v_row number;
+  3  	v_col number;
+  4  	v_str varchar2(20);
+  5  BEGIN
+  6  	v_row := 0;
+  7  	v_col := 10;
+  8  	v_str := '**********';
+  9  LOOP
+ 10  		v_row := v_row+1;
+ 11  		DBMS_OUTPUT.PUT_LINE(substr(v_str,1,v_col));
+ 12  		v_col := v_col-1-10;
+ 13  		EXIT WHEN v_row = 10;
+ 14  	END LOOP;
+ 15  	LOOP
+ 16  		v_row := v_row+1;
+ 17  		DBMS_OUTPUT.PUT_LINE(substr(v_str,1,v_col));
+ 18  		v_col := v_col-1;
+ 19  		EXIT WHEN v_row = 10;
+ 20  	END LOOP;
+ 21* END;
+ 22  ed
+ 23  
