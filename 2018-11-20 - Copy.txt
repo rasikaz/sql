@@ -1,0 +1,134 @@
+SQL> clear screen
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	TYPE emp IS RECORD(
+  3  		emp_no 		EMPLOYEES.EMPLOYEE_ID%TYPE;
+  4  		fn		EMPLOYEES.FIRST_NAME%TYPE;
+  5  		os		EMPLOYEES.SALARY%TYPE;
+  6  		ns		EMPLOYEES.SALARY%TYPE;
+  7  	);
+  8  	rec_emp 	emp;
+  9  BEGIN
+ 10  	SELECT 		employee_id,
+ 11  			first_name,
+ 12  			salary,
+ 13  			salary*10
+ 14  	INTO 		rec_emp
+ 15  	FROM 		employees
+ 16  	WHERE  		employee_id = 150;
+ 17  	DBMS_OUTPUT.PUT_LINE(rec_emp.fn);
+ 18* END;
+ 19  /
+		emp_no 		EMPLOYEES.EMPLOYEE_ID%TYPE;
+		       		                          *
+ERROR at line 3:
+ORA-06550: line 3, column 38: 
+PLS-00103: Encountered the symbol ";" when expecting one of the following: 
+:= ( ) , not null range default external character 
+The symbol ")" was substituted for ";" to continue. 
+ORA-06550: line 7, column 2: 
+PLS-00103: Encountered the symbol ")" when expecting one of the following: 
+begin function pragma procedure subtype type <an identifier> 
+<a double-quoted delimited-identifier> current cursor delete 
+exists prior 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	TYPE emp IS RECORD(
+  3  		emp_no 		EMPLOYEES.EMPLOYEE_ID%TYPE,
+  4  		fn		EMPLOYEES.FIRST_NAME%TYPE,
+  5  		os		EMPLOYEES.SALARY%TYPE,
+  6  		ns		EMPLOYEES.SALARY%TYPE
+  7  	);
+  8  	rec_emp 	emp;
+  9  BEGIN
+ 10  	SELECT 		employee_id,
+ 11  			first_name,
+ 12  			salary,
+ 13  			salary*10
+ 14  	INTO 		rec_emp
+ 15  	FROM 		employees
+ 16  	WHERE  		employee_id = 150;
+ 17  	DBMS_OUTPUT.PUT_LINE(rec_emp.fn);
+ 18* END;
+SQL> /
+Peter                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	TYPE loc IS RECORD(
+  3  		saddress	locations.STREET_ADDRESS%type,
+  4  		city		locations.city%type,
+  5  		cd		countries%ROWTYPE
+  6  	);
+  7  	rec_loc_con	loc;
+  8  BEGIN
+  9  	SELECT 		l.street_address,
+ 10  			l.city,
+ 11  			c.country_id,
+ 12  			c.country_name,
+ 13  			c.region_id
+ 14  	INTO 		rec_loc_con.saddress,
+ 15  			rec_loc_con.city,
+ 16  			rec_loc_con.cd.country_id,
+ 17  			rec_loc_con.cd.country_name,
+ 18  			rec_loc_con.cd.region_id,
+ 19  	FROM 		locations l,
+ 20  			countries c
+ 21  	WHERE  		l.location_id = 1000 AND
+ 22  			c.country_id = l.country_id;
+ 23  	DBMS_OUTPUT.PUT_LINE(rec_loc_con.city);
+ 24* END;
+ 25  /
+	FROM 		locations l,
+	*
+ERROR at line 19:
+ORA-06550: line 19, column 2: 
+PL/SQL: ORA-00936: missing expression 
+ORA-06550: line 9, column 2: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	TYPE loc IS RECORD(
+  3  		saddress	locations.STREET_ADDRESS%type,
+  4  		city		locations.city%type,
+  5  		cd		countries%ROWTYPE
+  6  	);
+  7  	rec_loc_con	loc;
+  8  BEGIN
+  9  	SELECT 		l.street_address,
+ 10  			l.city,
+ 11  			c.country_id,
+ 12  			c.country_name,
+ 13  			c.region_id
+ 14  	INTO 		rec_loc_con.saddress,
+ 15  			rec_loc_con.city,
+ 16  			rec_loc_con.cd.country_id,
+ 17  			rec_loc_con.cd.country_name,
+ 18  			rec_loc_con.cd.region_id
+ 19  	FROM 		locations l,
+ 20  			countries c
+ 21  	WHERE  		l.location_id = 1000 AND
+ 22  			c.country_id = l.country_id;
+ 23  	DBMS_OUTPUT.PUT_LINE(rec_loc_con.city);
+ 24* END;
+SQL> /
+Roma                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
+PL/SQL procedure successfully completed.
+
+SQL> spool off
