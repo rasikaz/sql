@@ -1,0 +1,178 @@
+SQL> select * from employees where 1=0;
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_primary 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT(ex_primary, -00001);
+  4  	e_same_dept_name EXCEPTION;
+  5  	v_dn		DEPARTMENTS.department_name%TYPE;
+  6  	v_num		number;
+  7  BEGIN
+  8  	v_dn	:= 'Administration';
+  9  	v_deptno:= 450;
+ 10  	BEGIN
+ 11  		INSERT INTO departments
+ 12  		VALUES (v_deptno,v_dn,200,1700);
+ 13  	EXCEPTION
+ 14  		WHEN ex_primary THEN
+ 15  			DBMS_OUTPUT.PUT_LINE('Department ID cannot be duplicated');
+ 16  	END;
+ 17  	BEGIN
+ 18  		SELECT	COUNT(*)
+ 19  		INTO 	v_num
+ 20  		FROM 	departments
+ 21  		WHERE	department_name = v_dn;
+ 22  		IF v_num > 0 THEN
+ 23  			raise_application_error(25000,'?');
+ 24  		END IF;
+ 25  	EXCEPTION 
+ 26  		WHEN e_same_dept_name THEN
+ 27  			DBMS_OUTPUT.PUT_LINE('cannot dup dept names');
+ 28  	END;
+ 29* END;
+SQL> /
+	v_deptno:= 450;
+	*
+ERROR at line 9:
+ORA-06550: line 9, column 2: 
+PLS-00201: identifier 'V_DEPTNO' must be declared 
+ORA-06550: line 9, column 2: 
+PL/SQL: Statement ignored 
+ORA-06550: line 12, column 11: 
+PL/SQL: ORA-00984: column not allowed here 
+ORA-06550: line 11, column 3: 
+PL/SQL: SQL Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_primary 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT(ex_primary, -00001);
+  4  	e_same_dept_name EXCEPTION;
+  5  	v_dn		DEPARTMENTS.department_name%TYPE;
+  6  	v_num		number;
+  7  	v_deptno  	number;
+  8  BEGIN
+  9  	v_dn	:= 'Administration';
+ 10  	v_deptno:= 10;
+ 11  	BEGIN
+ 12  		INSERT INTO departments
+ 13  		VALUES (v_deptno,v_dn,200,1700);
+ 14  	EXCEPTION
+ 15  		WHEN ex_primary THEN
+ 16  			DBMS_OUTPUT.PUT_LINE('Department ID cannot be duplicated');
+ 17  	END;
+ 18  	BEGIN
+ 19  		SELECT	COUNT(*)
+ 20  		INTO 	v_num
+ 21  		FROM 	departments
+ 22  		WHERE	department_name = v_dn;
+ 23  		IF v_num > 0 THEN
+ 24  			raise_application_error(25000,'?');
+ 25  		END IF;
+ 26  	EXCEPTION 
+ 27  		WHEN e_same_dept_name THEN
+ 28  			DBMS_OUTPUT.PUT_LINE('cannot dup dept names');
+ 29  	END;
+ 30* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-21000: error number argument to raise_application_error of 25000 is out of 
+range 
+ORA-06512: at line 24 
+
+
+SQL> ws
+SP2-0042: unknown command "ws" - rest of line ignored.
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_primary 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT(ex_primary, -00001);
+  4  	e_same_dept_name EXCEPTION;
+  5  	v_dn		DEPARTMENTS.department_name%TYPE;
+  6  	v_num		number;
+  7  	v_deptno  	number;
+  8  BEGIN
+  9  	v_dn	:= 'Administration';
+ 10  	v_deptno:= 10;
+ 11  	BEGIN
+ 12  		INSERT INTO departments
+ 13  		VALUES (v_deptno,v_dn,200,1700);
+ 14  	EXCEPTION
+ 15  		WHEN ex_primary THEN
+ 16  			DBMS_OUTPUT.PUT_LINE('Department ID cannot be duplicated');
+ 17  	END;
+ 18  	BEGIN
+ 19  		SELECT	COUNT(*)
+ 20  		INTO 	v_num
+ 21  		FROM 	departments
+ 22  		WHERE	department_name = v_dn;
+ 23  		IF v_num > 0 THEN
+ 24  			raise_application_error(-25000,'?');
+ 25  		END IF;
+ 26  	EXCEPTION 
+ 27  		WHEN e_same_dept_name THEN
+ 28  			DBMS_OUTPUT.PUT_LINE('cannot dup dept names');
+ 29  	END;
+ 30* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-21000: error number argument to raise_application_error of -25000 is out of 
+range 
+ORA-06512: at line 24 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_primary 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT(ex_primary, -00001);
+  4  	e_same_dept_name EXCEPTION;
+  5  	v_dn		DEPARTMENTS.department_name%TYPE;
+  6  	v_num		number;
+  7  	v_deptno  	number;
+  8  BEGIN
+  9  	v_dn	:= 'Administration';
+ 10  	v_deptno:= 10;
+ 11  	BEGIN
+ 12  		INSERT INTO departments
+ 13  		VALUES (v_deptno,v_dn,200,1700);
+ 14  	EXCEPTION
+ 15  		WHEN ex_primary THEN
+ 16  			DBMS_OUTPUT.PUT_LINE('Department ID cannot be duplicated');
+ 17  	END;
+ 18  	BEGIN
+ 19  		SELECT	COUNT(*)
+ 20  		INTO 	v_num
+ 21  		FROM 	departments
+ 22  		WHERE	department_name = v_dn;
+ 23  		IF v_num > 0 THEN
+ 24  			raise_application_error(-20000,'sdfsdfsfdg');
+ 25  		END IF;
+ 26  	EXCEPTION 
+ 27  		WHEN e_same_dept_name THEN
+ 28  			DBMS_OUTPUT.PUT_LINE('cannot dup dept names');
+ 29  	END;
+ 30* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-20000: sdfsdfsfdg 
+ORA-06512: at line 24 
+
+
+SQL> spool off

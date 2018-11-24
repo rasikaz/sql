@@ -1,0 +1,1960 @@
+SQL> select * from employees where 1=0;
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  BEGIN
+  4  	SELECT first_name
+  5  	INTO vc_fn
+  6  	FROM employees
+  7  	WHERE employee_id = 1500;
+  8  	DBMS_OUTPUT.PUTLINE(vc_fn);
+  9* END;
+ 10  /
+	DBMS_OUTPUT.PUTLINE(vc_fn);
+	            *
+ERROR at line 8:
+ORA-06550: line 8, column 14: 
+PLS-00302: component 'PUTLINE' must be declared 
+ORA-06550: line 8, column 2: 
+PL/SQL: Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  BEGIN
+  4  	SELECT first_name
+  5  	INTO vc_fn
+  6  	FROM employees
+  7  	WHERE employee_id = 1500;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  9* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01403: no data found 
+ORA-06512: at line 4 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  BEGIN
+  4  	SELECT first_name
+  5  	INTO vc_fn
+  6  	FROM employees
+  7  	WHERE employee_id = 1500;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  9  EXCEPTION	
+ 10  	WHEN NO_DATA_FOUND THEN
+ 11  		DBMS_OUTPUT.PUT_LINE('DATA NOT FOUND');
+ 12* END;
+ 13  /
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  BEGIN
+  4  	SELECT first_name
+  5  	INTO vc_fn
+  6  	FROM employees
+  7  	WHERE employee_id = 1500;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  9  EXCEPTION	
+ 10  	WHEN NO_DATA_FOUND THEN
+ 11  		DBMS_OUTPUT.PUT_LINE('first name '|| first_name);
+ 12* END;
+SQL> /
+		DBMS_OUTPUT.PUT_LINE('first name '|| first_name);
+		                                     *
+ERROR at line 11:
+ORA-06550: line 11, column 40: 
+PLS-00201: identifier 'FIRST_NAME' must be declared 
+ORA-06550: line 11, column 3: 
+PL/SQL: Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  BEGIN
+  4  	SELECT first_name
+  5  	INTO vc_fn
+  6  	FROM employees
+  7  	WHERE employee_id = 1500;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  9  EXCEPTION	
+ 10  	WHEN NO_DATA_FOUND THEN
+ 11  		DBMS_OUTPUT.PUT_LINE('first name ');
+ 12* END;
+SQL> set serveroutput on
+SQL> /
+first name                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  BEGIN
+  4  	SELECT first_name
+  5  	INTO vc_fn
+  6  	FROM employees
+  7  	WHERE employee_id = 1500;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  9  EXCEPTION	
+ 10  	WHEN NO_DATA_FOUND THEN0
+ 11  		DBMS_OUTPUT.PUT_LINE('no data found');
+ 12* END;
+SQL> /
+	WHEN NO_DATA_FOUND THEN0
+	                   *
+ERROR at line 10:
+ORA-06550: line 10, column 21: 
+PLS-00103: Encountered the symbol "THEN0" when expecting one of the following: 
+. then or 
+ORA-06550: line 12, column 1: 
+PLS-00103: Encountered the symbol "END" when expecting one of the following: 
+begin function pragma procedure subtype type <an identifier> 
+<a double-quoted delimited-identifier> current cursor delete 
+exists prior 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  BEGIN
+  4  	SELECT first_name
+  5  	INTO vc_fn
+  6  	FROM employees
+  7  	WHERE employee_id = 1500;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  9  EXCEPTION	
+ 10  	WHEN NO_DATA_FOUND THEN
+ 11  		DBMS_OUTPUT.PUT_LINE('no data found');
+ 12* END;
+SQL> ;
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  BEGIN
+  4  	SELECT first_name
+  5  	INTO vc_fn
+  6  	FROM employees
+  7  	WHERE employee_id = 1500;
+  8  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+  9  EXCEPTION	
+ 10  	WHEN NO_DATA_FOUND THEN
+ 11  		DBMS_OUTPUT.PUT_LINE('no data found');
+ 12* END;
+SQL> /
+no data found                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_min NUMBER;
+  4  	v_max NUMBER;
+  5  BEGIN
+  6  	SELECT first_name
+  7  	INTO vc_fn
+  8  	FROM employees
+  9  	WHERE employee_id = 1500;
+ 10  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 11  EXCEPTION	
+ 12  	WHEN NO_DATA_FOUND THEN
+ 13  		SELECT	MIN(employee_id), 
+ 14  			MAX(employee_id)
+ 15  		INTO 	v_min,
+ 16  			v_max
+ 17  		FROM employees;
+ 18  		DBMS_OUTPUT.PUT_LINE(v_min' < employee_id is between< '|| v_max);
+ 19* END;
+SQL> /
+		DBMS_OUTPUT.PUT_LINE(v_min' < employee_id is between< '|| v_max);
+		                          *
+ERROR at line 18:
+ORA-06550: line 18, column 29: 
+PLS-00103: Encountered the symbol " < employee_id is between< " when expecting 
+one of the following: 
+. ( ) , * @ % & = - + < / > at in is mod remainder not rem => 
+<an exponent (**)> <> or != or ~= >= <= <> and or like like2 
+like4 likec as between from using || multiset member 
+submultiset 
+The symbol "(" was substituted for " < employee_id is between< " to continue. 
+ORA-06550: line 18, column 67: 
+PLS-00103: Encountered the symbol ";" when expecting one of the following: 
+. ( ) , * % & = - + < / > at in is mod remainder not rem => 
+<an exponent (**)> <> or != or ~= >= <= <> and or like like2 
+like4 likec as between from using || multiset member 
+submultiset 
+The symbol ")" was substituted for ";" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_min NUMBER;
+  4  	v_max NUMBER;
+  5  BEGIN
+  6  	SELECT first_name
+  7  	INTO vc_fn
+  8  	FROM employees
+  9  	WHERE employee_id = 1500;
+ 10  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 11  EXCEPTION	
+ 12  	WHEN NO_DATA_FOUND THEN
+ 13  		SELECT	MIN(employee_id), 
+ 14  			MAX(employee_id)
+ 15  		INTO 	v_min,
+ 16  			v_max
+ 17  		FROM employees;
+ 18  		DBMS_OUTPUT.PUT_LINE(v_min' ||< employee_id is between< '|| v_max);
+ 19* END;
+SQL> /
+		DBMS_OUTPUT.PUT_LINE(v_min' ||< employee_id is between< '|| v_max);
+		                          *
+ERROR at line 18:
+ORA-06550: line 18, column 29: 
+PLS-00103: Encountered the symbol " ||< employee_id is between< " when 
+expecting one of the following: 
+. ( ) , * @ % & = - + < / > at in is mod remainder not rem => 
+<an exponent (**)> <> or != or ~= >= <= <> and or like like2 
+like4 likec as between from using || multiset member 
+submultiset 
+The symbol "(" was substituted for " ||< employee_id is between< " to continue. 
+ORA-06550: line 18, column 69: 
+PLS-00103: Encountered the symbol ";" when expecting one of the following: 
+. ( ) , * % & = - + < / > at in is mod remainder not rem => 
+<an exponent (**)> <> or != or ~= >= <= <> and or like like2 
+like4 likec as between from using || multiset member 
+submultiset 
+The symbol ")" was substituted for ";" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_min NUMBER;
+  4  	v_max NUMBER;
+  5  BEGIN
+  6  	SELECT first_name
+  7  	INTO vc_fn
+  8  	FROM employees
+  9  	WHERE employee_id = 1500;
+ 10  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 11  EXCEPTION	
+ 12  	WHEN NO_DATA_FOUND THEN
+ 13  		SELECT	MIN(employee_id), 
+ 14  			MAX(employee_id)
+ 15  		INTO 	v_min,
+ 16  			v_max
+ 17  		FROM employees;
+ 18  		DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 19* END;
+SQL> /
+100< employee_id is between< 206                                                
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+100< employee_id is between< 206                                                
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_min NUMBER;
+  4  	v_max NUMBER;
+  5  BEGIN
+  6  	SELECT first_name
+  7  	INTO vc_fn
+  8  	FROM employees
+  9  	WHERE employee_id = 1500;
+ 10  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 11  EXCEPTION	
+ 12  	WHEN NO_DATA_FOUND THEN
+ 13  		SELECT	MIN(employee_id), 
+ 14  			MAX(employee_id)
+ 15  		INTO 	v_min,
+ 16  			v_max
+ 17  		FROM employees;
+ 18  		DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 19* END;
+SQL> show user
+USER is "PS2014041"
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create table excep_log(
+  2  	user_name varchar2(50),
+  3  	emp_id number,
+  4  	log_date date
+  5* )
+  6  /
+
+Table created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_min 	NUMBER;
+  5  	v_max 	NUMBER;
+  6  BEGIN
+  7  	v_eNo = 1500;
+  8  	SELECT first_name
+  9  	INTO vc_fn
+ 10  	FROM employees
+ 11  	WHERE employee_id = v_eNo;
+ 12  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 13  EXCEPTION	
+ 14  	WHEN NO_DATA_FOUND THEN
+ 15  		SELECT	MIN(employee_id), 
+ 16  			MAX(employee_id)
+ 17  		INTO 	v_min,
+ 18  			v_max
+ 19  		FROM employees;
+ 20  		DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 21  		INSERT INTO EXCEP_LOG
+ 22  		VALUES(user, v_eNo,SYSDATE);
+ 23* END;
+ 24  /
+	v_eNo = 1500;
+	      *
+ERROR at line 7:
+ORA-06550: line 7, column 8: 
+PLS-00103: Encountered the symbol "=" when expecting one of the following: 
+:= . ( @ % ; 
+The symbol ":= was inserted before "=" to continue. 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_min 	NUMBER;
+  5  	v_max 	NUMBER;
+  6  BEGIN
+  7  	v_eNo := 1500;
+  8  	SELECT first_name
+  9  	INTO vc_fn
+ 10  	FROM employees
+ 11  	WHERE employee_id = v_eNo;
+ 12  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 13  EXCEPTION	
+ 14  	WHEN NO_DATA_FOUND THEN
+ 15  		SELECT	MIN(employee_id), 
+ 16  			MAX(employee_id)
+ 17  		INTO 	v_min,
+ 18  			v_max
+ 19  		FROM employees;
+ 20  		DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 21  		INSERT INTO EXCEP_LOG
+ 22  		VALUES(user, v_eNo,SYSDATE);
+ 23* END;
+SQL> /
+100< employee_id is between< 206                                                
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT * FROM EXCEP_LOG;
+
+USER_NAME                                              EMP_ID LOG_DATE          
+-------------------------------------------------- ---------- ---------         
+PS2014041                                                1500 24-NOV-18         
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_min 	NUMBER;
+  5  	v_max 	NUMBER;
+  6  BEGIN
+  7  	v_eNo = 1500;
+  8  	SELECT first_name
+  9  	INTO vc_fn
+ 10  	FROM employees
+ 11  	WHERE employee_id = v_eNo;
+ 12  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 13  EXCEPTION	
+ 14  	WHEN NO_DATA_FOUND THEN
+ 15  		--DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 16  		INSERT INTO EXCEP_LOG
+ 17   	        VALUES(user, v_eNo,SYSDATE);
+ 18* END;
+ 19  /
+	v_eNo = 1500;
+	      *
+ERROR at line 7:
+ORA-06550: line 7, column 8: 
+PLS-00103: Encountered the symbol "=" when expecting one of the following: 
+:= . ( @ % ; 
+The symbol ":= was inserted before "=" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_min 	NUMBER;
+  5  	v_max 	NUMBER;
+  6  BEGIN
+  7  	v_eNo := 1500;
+  8  	SELECT first_name
+  9  	INTO vc_fn
+ 10  	FROM employees
+ 11  	WHERE employee_id = v_eNo;
+ 12  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 13  EXCEPTION	
+ 14  	WHEN NO_DATA_FOUND THEN
+ 15  		--DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 16  		INSERT INTO EXCEP_LOG
+ 17   	        VALUES(user, v_eNo,SYSDATE);
+ 18* END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500
+  9  	v_dID := 80;
+ 10  	SELECT first_name
+ 11  	INTO vc_fn
+ 12  	FROM employees
+ 13  	WHERE /*employee_id = v_eNo AND*/
+ 14  	department_id = v_dID;
+ 15  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 16  EXCEPTION	
+ 17  	WHEN NO_DATA_FOUND THEN
+ 18  		--DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 19  		INSERT INTO EXCEP_LOG
+ 20   	        VALUES(user, v_eNo,SYSDATE);
+ 21* END;
+SQL> /
+	v_dID := 80;
+	*
+ERROR at line 9:
+ORA-06550: line 9, column 2: 
+PLS-00103: Encountered the symbol "V_DID" when expecting one of the following: 
+* & = - + ; < / > at in is mod remainder not rem 
+<an exponent (**)> <> or != or ~= >= <= <> and or like like2 
+like4 likec between || multiset member submultiset 
+The symbol ";" was substituted for "V_DID" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	SELECT first_name
+ 11  	INTO vc_fn
+ 12  	FROM employees
+ 13  	WHERE /*employee_id = v_eNo AND*/
+ 14  	department_id = v_dID;
+ 15  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 16  EXCEPTION	
+ 17  	WHEN NO_DATA_FOUND THEN
+ 18  		--DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 19  		INSERT INTO EXCEP_LOG
+ 20   	        VALUES(user, v_eNo,SYSDATE);
+ 21* END;
+SQL> /
+DECLARE
+*
+ERROR at line 1:
+ORA-01422: exact fetch returns more than requested number of rows 
+ORA-06512: at line 10 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	SELECT first_name
+ 11  	INTO vc_fn
+ 12  	FROM employees
+ 13  	WHERE /*employee_id = v_eNo AND*/
+ 14  	department_id = v_dID;
+ 15  	SELECT first_name
+ 16  	INTO vc_fn
+ 17  	FROM employees
+ 18  	WHERE employee_id = v_eNo;
+ 19  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 20  EXCEPTION	
+ 21  	WHEN NO_DATA_FOUND THEN
+ 22  		--DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 23  		INSERT INTO EXCEP_LOG
+ 24   	        VALUES(user, v_eNo,SYSDATE);
+ 25* END;
+ 26  /
+DECLARE
+*
+ERROR at line 1:
+ORA-01422: exact fetch returns more than requested number of rows 
+ORA-06512: at line 10 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	SELECT first_name
+ 11  	INTO vc_fn
+ 12  	FROM employees
+ 13  	WHERE employee_id = v_eNo;
+ 14  	SELECT first_name
+ 15  	INTO vc_fn
+ 16  	FROM employees
+ 17  	WHERE /*employee_id = v_eNo AND*/
+ 18  	department_id = v_dID;
+ 19  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 20  EXCEPTION	
+ 21  	WHEN NO_DATA_FOUND THEN
+ 22  		--DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 23  		INSERT INTO EXCEP_LOG
+ 24   	        VALUES(user, v_eNo,SYSDATE);
+ 25* END;
+ 26  /
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	SELECT first_name
+ 11  	INTO vc_fn
+ 12  	FROM employees
+ 13  	WHERE /*employee_id = v_eNo AND*/
+ 14  	department_id = v_dID;
+ 15  	SELECT first_name
+ 16  	INTO vc_fn
+ 17  	FROM employees
+ 18  	WHERE employee_id = v_eNo;
+ 19  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 20  EXCEPTION	
+ 21  	WHEN NO_DATA_FOUND THEN
+ 22  		--DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 23  		INSERT INTO EXCEP_LOG
+ 24   	        VALUES(user, v_eNo,SYSDATE);
+ 25* END;
+ 26  /
+DECLARE
+*
+ERROR at line 1:
+ORA-01422: exact fetch returns more than requested number of rows 
+ORA-06512: at line 10 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	SELECT first_name
+ 11  	INTO vc_fn
+ 12  	FROM employees
+ 13  	WHERE /*employee_id = v_eNo AND*/
+ 14  	department_id = v_dID;
+ 15  	SELECT first_name
+ 16  	INTO vc_fn
+ 17  	FROM employees
+ 18  	WHERE employee_id = v_eNo;
+ 19  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 20  EXCEPTION	
+ 21  	WHEN NO_DATA_FOUND THEN
+ 22  		--DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 23  		INSERT INTO EXCEP_LOG
+ 24   	        VALUES(user, v_eNo,SYSDATE);
+ 25  	WHEN TOO_MANY_ROWS THEN
+ 26  		DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 27* END;
+SQL> /
+TOO MANY ROWS                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	SELECT first_name
+ 11  	INTO vc_fn
+ 12  	FROM employees
+ 13  	WHERE /*employee_id = v_eNo AND*/
+ 14  	department_id = v_dID;
+ 15  	SELECT first_name
+ 16  	INTO vc_fn
+ 17  	FROM employees
+ 18  	WHERE employee_id = v_eNo;
+ 19  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 20  EXCEPTION	
+ 21  	WHEN NO_DATA_FOUND OR TOO_MANY_ROWS THEN
+ 22  		--DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 23  		INSERT INTO EXCEP_LOG
+ 24   	        VALUES(user, v_eNo,SYSDATE);
+ 25  	/*WHEN TOO_MANY_ROWS THEN
+ 26  		DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');*/
+ 27* END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	SELECT first_name
+ 11  	INTO vc_fn
+ 12  	FROM employees
+ 13  	WHERE /*employee_id = v_eNo AND*/
+ 14  	department_id = v_dID;
+ 15  	SELECT first_name
+ 16  	INTO vc_fn
+ 17  	FROM employees
+ 18  	WHERE employee_id = v_eNo;
+ 19  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 20  EXCEPTION	
+ 21  	WHEN NO_DATA_FOUND THEN
+ 22  		DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 23  		/*INSERT INTO EXCEP_LOG
+ 24   	        VALUES(user, v_eNo,SYSDATE);*/
+ 25  	WHEN TOO_MANY_ROWS THEN
+ 26  		DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 27* END;
+SQL> /
+TOO MANY ROWS                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	SELECT first_name
+ 11  	INTO vc_fn
+ 12  	FROM employees
+ 13  	WHERE employee_id = v_eNo;
+ 14  	SELECT first_name
+ 15  	INTO vc_fn
+ 16  	FROM employees
+ 17  	WHERE /*employee_id = v_eNo AND*/
+ 18  	department_id = v_dID;
+ 19  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 20  EXCEPTION	
+ 21  	WHEN NO_DATA_FOUND THEN
+ 22  		DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 23  		/*INSERT INTO EXCEP_LOG
+ 24   	        VALUES(user, v_eNo,SYSDATE);*/
+ 25  	WHEN TOO_MANY_ROWS THEN
+ 26  		DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 27* END;
+ 28  /
+< employee_id is between<                                                       
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	SELECT first_name
+ 11  	INTO vc_fn
+ 12  	FROM employees
+ 13  	WHERE employee_id = v_eNo;
+ 14  	BEGIN
+ 15  		SELECT first_name
+ 16  		INTO vc_fn
+ 17  		FROM employees
+ 18  		WHERE /*employee_id = v_eNo AND*/
+ 19  		department_id = v_dID;
+ 20  	EXCEPTION
+ 21  		WHEN TOO_MANY_ROWS THEN
+ 22  		DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 23  	END;
+ 24  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 25  EXCEPTION	
+ 26  	WHEN NO_DATA_FOUND THEN
+ 27  		DBMS_OUTPUT.PUT_LINE(v_min ||'< employee_id is between< '|| v_max);
+ 28  		/*INSERT INTO EXCEP_LOG
+ 29   	        VALUES(user, v_eNo,SYSDATE);*/
+ 30* END;
+ 31  /
+< employee_id is between<                                                       
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	BEGIN
+ 11  		SELECT first_name
+ 12  		INTO vc_fn
+ 13  		FROM employees
+ 14  		WHERE employee_id = v_eNo;
+ 15  	EXCEPTION
+ 16  		WHEN WHEN NO_DATA_FOUND THEN
+ 17  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 18  	END;
+ 19  	BEGIN
+ 20  		SELECT first_name
+ 21  		INTO vc_fn
+ 22  		FROM employees
+ 23  		WHERE /*employee_id = v_eNo AND*/
+ 24  		department_id = v_dID;
+ 25  	EXCEPTION
+ 26  		WHEN TOO_MANY_ROWS THEN
+ 27  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 28  	END;
+ 29  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 30* END;
+ 31  /
+		WHEN WHEN NO_DATA_FOUND THEN
+		     *
+ERROR at line 16:
+ORA-06550: line 16, column 8: 
+PLS-00103: Encountered the symbol "WHEN" when expecting one of the following: 
+others <an identifier> <a double-quoted delimited-identifier> 
+ORA-06550: line 19, column 2: 
+PLS-00103: Encountered the symbol "BEGIN" when expecting one of the following: 
+end not pragma final instantiable order overriding static 
+member constructor map 
+ORA-06550: line 29, column 2: 
+PLS-00103: Encountered the symbol "DBMS_OUTPUT" when expecting one of the 
+following: 
+end not pragma final instantiable order overriding static 
+member constructor map 
+ORA-06550: line 29, column 29: 
+PLS-00103: Encountered the symbol ";" when expecting one of the following: 
+. ( , * % & - + / at mod remainder rem <an identifier> 
+<a double-quoted delimited-identifier> <an exponent (**)> as 
+from into || multiset bulk 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	BEGIN
+ 11  		SELECT first_name
+ 12  		INTO vc_fn
+ 13  		FROM employees
+ 14  		WHERE employee_id = v_eNo;
+ 15  	EXCEPTION
+ 16  		WHEN NO_DATA_FOUND THEN
+ 17  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 18  	END;
+ 19  	BEGIN
+ 20  		SELECT first_name
+ 21  		INTO vc_fn
+ 22  		FROM employees
+ 23  		WHERE /*employee_id = v_eNo AND*/
+ 24  		department_id = v_dID;
+ 25  	EXCEPTION
+ 26  		WHEN TOO_MANY_ROWS THEN
+ 27  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 28  	END;
+ 29  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 30* END;
+SQL> /
+NO EMP ID                                                                       
+TOO MANY ROWS                                                                   
+Ellen                                                                           
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	BEGIN
+ 11  		SELECT first_name
+ 12  		INTO vc_fn
+ 13  		FROM employees
+ 14  		WHERE employee_id = v_eNo;
+ 15  	EXCEPTION
+ 16  		WHEN OTHERS
+ 17  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 18  		WHEN NO_DATA_FOUND THEN
+ 19  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 20  	END;
+ 21  	BEGIN
+ 22  		SELECT first_name
+ 23  		INTO vc_fn
+ 24  		FROM employees
+ 25  		WHERE /*employee_id = v_eNo AND*/
+ 26  		department_id = v_dID;
+ 27  	EXCEPTION
+ 28  		WHEN TOO_MANY_ROWS THEN
+ 29  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 30  	END;
+ 31  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 32* END;
+SQL> /
+			DBMS_OUTPUT.PUT_LINE('OTHER');
+			*
+ERROR at line 17:
+ORA-06550: line 17, column 4: 
+PLS-00103: Encountered the symbol "DBMS_OUTPUT" when expecting one of the 
+following: 
+then or 
+The symbol "then" was substituted for "DBMS_OUTPUT" to continue. 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	BEGIN
+ 11  		SELECT first_name
+ 12  		INTO vc_fn
+ 13  		FROM employees
+ 14  		WHERE employee_id = v_eNo;
+ 15  	EXCEPTION
+ 16  		WHEN OTHERS THEN
+ 17  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 18  		WHEN NO_DATA_FOUND THEN
+ 19  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 20  	END;
+ 21  	BEGIN
+ 22  		SELECT first_name
+ 23  		INTO vc_fn
+ 24  		FROM employees
+ 25  		WHERE /*employee_id = v_eNo AND*/
+ 26  		department_id = v_dID;
+ 27  	EXCEPTION
+ 28  		WHEN TOO_MANY_ROWS THEN
+ 29  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 30  	END;
+ 31  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 32* END;
+SQL> /
+		WHEN OTHERS THEN
+		*
+ERROR at line 16:
+ORA-06550: line 16, column 3: 
+PLS-00370: OTHERS handler must be last among the exception handlers of a block 
+ORA-06550: line 10, column 2: 
+PL/SQL: Statement ignored 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	BEGIN
+ 11  		SELECT first_name
+ 12  		INTO vc_fn
+ 13  		FROM employees
+ 14  		WHERE employee_id = v_eNo;
+ 15  	EXCEPTION
+ 16  		WHEN NO_DATA_FOUND THEN
+ 17  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 18  	END;
+ 19  	BEGIN
+ 20  		SELECT first_name
+ 21  		INTO vc_fn
+ 22  		FROM employees
+ 23  		WHERE /*employee_id = v_eNo AND*/
+ 24  		department_id = v_dID;
+ 25  	EXCEPTION
+ 26  		WHEN TOO_MANY_ROWS THEN
+ 27  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 28  	END;
+ 29  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 30  	WHEN OTHERS THEN
+ 31  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 32* END;
+SQL> /
+	WHEN OTHERS THEN
+	*
+ERROR at line 30:
+ORA-06550: line 30, column 2: 
+PLS-00103: Encountered the symbol "WHEN" when expecting one of the following: 
+( begin case declare end exception exit for goto if loop mod 
+null pragma raise return select update while with 
+<an identifier> <a double-quoted delimited-identifier> 
+<a bind variable> << continue close current delete fetch lock 
+insert open rollback savepoint set sql execute commit forall 
+merge pipe purge 
+The symbol "exception" was substituted for "WHEN" to continue. 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	BEGIN
+ 11  		SELECT first_name
+ 12  		INTO vc_fn
+ 13  		FROM employees
+ 14  		WHERE employee_id = v_eNo;
+ 15  	EXCEPTION
+ 16  		WHEN NO_DATA_FOUND THEN
+ 17  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 18  	END;
+ 19  	BEGIN
+ 20  		SELECT first_name
+ 21  		INTO vc_fn
+ 22  		FROM employees
+ 23  		WHERE /*employee_id = v_eNo AND*/
+ 24  		department_id = v_dID;
+ 25  	EXCEPTION
+ 26  		WHEN TOO_MANY_ROWS THEN
+ 27  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 28  	END;
+ 29  	EXCEPTION
+ 30  		WHEN OTHERS THEN
+ 31  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 32  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 33* END;
+ 34  /
+NO EMP ID                                                                       
+TOO MANY ROWS                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	BEGIN
+ 11  		SELECT first_name
+ 12  		INTO vc_fn
+ 13  		FROM employees
+ 14  		WHERE employee_id = v_eNo;
+ 15  	EXCEPTION
+ 16  		WHEN NO_DATA_FOUND THEN
+ 17  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 18  		WHEN TOO_MANY_ROWS THEN
+ 19  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 20  	END;
+ 21  	BEGIN
+ 22  		SELECT first_name
+ 23  		INTO vc_fn
+ 24  		FROM employees
+ 25  		WHERE /*employee_id = v_eNo AND*/
+ 26  		department_id = v_dID;
+ 27  	EXCEPTION
+ 28  		WHEN TOO_MANY_ROWS THEN
+ 29  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 30  		WHEN TOO_MANY_ROWS THEN
+ 31  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 32  	END;
+ 33  	EXCEPTION
+ 34  		WHEN OTHERS THEN
+ 35  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 36  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 37* END;
+SQL> /
+		WHEN TOO_MANY_ROWS THEN
+		*
+ERROR at line 30:
+ORA-06550: line 30, column 3: 
+PLS-00483: exception 'TOO_MANY_ROWS' may appear in at most one exception 
+handler in this block 
+ORA-06550: line 21, column 2: 
+PL/SQL: Statement ignored 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  BEGIN
+  8  	v_eNo := 1500;
+  9  	v_dID := 80;
+ 10  	BEGIN
+ 11  		SELECT first_name
+ 12  		INTO vc_fn
+ 13  		FROM employees
+ 14  		WHERE employee_id = v_eNo;
+ 15  	EXCEPTION
+ 16  		WHEN NO_DATA_FOUND THEN
+ 17  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 18  		WHEN OTHERS THEN
+ 19  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 20  	END;
+ 21  	BEGIN
+ 22  		SELECT first_name
+ 23  		INTO vc_fn
+ 24  		FROM employees
+ 25  		WHERE /*employee_id = v_eNo AND*/
+ 26  		department_id = v_dID;
+ 27  	EXCEPTION
+ 28  		WHEN TOO_MANY_ROWS THEN
+ 29  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 30  		WHEN OTHERS THEN
+ 31  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 32  	END;
+ 33  	EXCEPTION
+ 34  		WHEN OTHERS THEN
+ 35  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 36  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 37* END;
+SQL> /
+NO EMP ID                                                                       
+TOO MANY ROWS                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  	v_num 	number;
+  8  BEGIN
+  9  	v_eNo := 1500;
+ 10  	v_dID := 80;
+ 11  	BEGIN
+ 12  		SELECT first_name
+ 13  		INTO vc_fn
+ 14  		FROM employees
+ 15  		WHERE employee_id = v_eNo;
+ 16  		v_num :=100/0;
+ 17  	EXCEPTION
+ 18  		WHEN NO_DATA_FOUND THEN
+ 19  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 20  		WHEN ZERO_DIVIDE THEN
+ 21  			DBMS_OUTPUT.PUT_LINE('cannot divied by 0');
+ 22  		WHEN OTHERS THEN
+ 23  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 24  	END;
+ 25  	BEGIN
+ 26  		SELECT first_name
+ 27  		INTO vc_fn
+ 28  		FROM employees
+ 29  		WHERE /*employee_id = v_eNo AND*/
+ 30  		department_id = v_dID;
+ 31  	EXCEPTION
+ 32  		WHEN TOO_MANY_ROWS THEN
+ 33  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 34  		WHEN OTHERS THEN
+ 35  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 36  	END;
+ 37  	EXCEPTION
+ 38  		WHEN OTHERS THEN
+ 39  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 40  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 41* END;
+SQL> /
+NO EMP ID                                                                       
+TOO MANY ROWS                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1     DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  	v_num 	number;
+  8  BEGIN
+  9  	v_eNo := 1500;
+ 10  	v_dID := 80;
+ 11  	BEGIN
+ 12  		SELECT first_name
+ 13  		INTO vc_fn
+ 14  		FROM employees
+ 15  		WHERE employee_id = v_eNo;
+ 16  		BEGIN
+ 17  			v_num :=100/0;
+ 18  		EXCEPTION
+ 19  			WHEN ZERO_DIVIDE THEN
+ 20  				DBMS_OUTPUT.PUT_LINE('cannot divied by 0');
+ 21  		END;
+ 22  	EXCEPTION
+ 23  		WHEN NO_DATA_FOUND THEN
+ 24  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 25  		WHEN OTHERS THEN
+ 26  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 27  	END;
+ 28  	BEGIN
+ 29  		SELECT first_name
+ 30  		INTO vc_fn
+ 31  		FROM employees
+ 32  		WHERE /*employee_id = v_eNo AND*/
+ 33  		department_id = v_dID;
+ 34  	EXCEPTION
+ 35  		WHEN TOO_MANY_ROWS THEN
+ 36  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 37  		WHEN OTHERS THEN
+ 38  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 39  	END;
+ 40  	EXCEPTION
+ 41  		WHEN OTHERS THEN
+ 42  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 43  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 44* END;
+ 45  /
+NO EMP ID                                                                       
+TOO MANY ROWS                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1     DECLARE
+  2  	vc_fn	EMPLOYEES.first_name%TYPE;
+  3  	v_eNo 	EMPLOYEES.employee_id%TYPE;
+  4  	v_dID	EMPLOYEES.department_id%TYPE;
+  5  	v_min 	NUMBER;
+  6  	v_max 	NUMBER;
+  7  	v_num 	number;
+  8  BEGIN
+  9  	v_eNo := 1500;
+ 10  	v_dID := 80;
+ 11  	BEGIN
+ 12  		SELECT first_name
+ 13  		INTO vc_fn
+ 14  		FROM employees
+ 15  		WHERE employee_id = v_eNo;
+ 16  	EXCEPTION
+ 17  		WHEN NO_DATA_FOUND THEN
+ 18  			DBMS_OUTPUT.PUT_LINE('NO EMP ID');
+ 19  		WHEN OTHERS THEN
+ 20  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 21  	END;
+ 22  	BEGIN
+ 23  		SELECT first_name
+ 24  		INTO vc_fn
+ 25  		FROM employees
+ 26  		WHERE /*employee_id = v_eNo AND*/
+ 27  		department_id = v_dID;
+ 28  	EXCEPTION
+ 29  		WHEN TOO_MANY_ROWS THEN
+ 30  			DBMS_OUTPUT.PUT_LINE('TOO MANY ROWS');
+ 31  		WHEN OTHERS THEN
+ 32  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 33  	END;
+ 34  	BEGIN
+ 35  		v_num :=100/0;
+ 36  	EXCEPTION
+ 37  		WHEN ZERO_DIVIDE THEN
+ 38  			DBMS_OUTPUT.PUT_LINE('cannot divied by 0');
+ 39  	END;
+ 40  	EXCEPTION
+ 41  		WHEN OTHERS THEN
+ 42  			DBMS_OUTPUT.PUT_LINE('OTHER');
+ 43  	DBMS_OUTPUT.PUT_LINE(vc_fn);
+ 44* END;
+ 45  /
+NO EMP ID                                                                       
+TOO MANY ROWS                                                                   
+cannot divied by 0                                                              
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DELETE FROM DEPARTMNET
+  2* WHERE DEPARTMENT_ID =10
+SQL> /
+DELETE FROM DEPARTMNET
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DELETE FROM DEPARTMENTS
+  2* WHERE DEPARTMENT_ID =10
+SQL> /
+DELETE FROM DEPARTMENTS
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (PS2014041.EMP_DEPT_FK) violated - child record 
+found 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_fk_constraint 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT
+  4  		(ex_fk_constraint, -02292);
+  5  	v_dID 			DEPARTMENTS.department_id%TYPE;
+  6  BEGIN
+  7  	v_dID := 10;
+  8  	DELETE FROM DEPARTMENTS
+  9  	WHERE	department_id = v_dID;
+ 10  EXCEPTION
+ 11  	WHEN ex_fk_constraint THEN
+ 12  		DBMS_OUTPUT.PUT_LINE('ERROR');
+ 13* END;
+ 14  ED/
+ 15  /
+ERROR:
+ORA-03114: not connected to ORACLE 
+
+
+DECLARE
+*
+ERROR at line 1:
+ORA-12571: TNS:packet writer failure 
+
+
+
+SQL> /
+ERROR:
+ORA-03114: not connected to ORACLE 
+
+
+SQL> EDED
+SP2-0042: unknown command "EDED" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_fk_constraint 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT
+  4  		(ex_fk_constraint, -02292);
+  5  	v_dID 			DEPARTMENTS.department_id%TYPE;
+  6  BEGIN
+  7  	v_dID := 10;
+  8  	DELETE FROM DEPARTMENTS
+  9  	WHERE	department_id = v_dID;
+ 10  EXCEPTION
+ 11  	WHEN ex_fk_constraint THEN
+ 12  		DBMS_OUTPUT.PUT_LINE('ERROR');
+ 13* END;
+ 14  /
+ERROR:
+ORA-03114: not connected to ORACLE 
+
+
+SQL> CONNECT
+Enter user-name: PS2014041/PS2014041@IT
+Connected.
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_fk_constraint 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT
+  4  		(ex_fk_constraint, -02292);
+  5  	v_dID 			DEPARTMENTS.department_id%TYPE;
+  6  BEGIN
+  7  	v_dID := 10;
+  8  	DELETE FROM DEPARTMENTS
+  9  	WHERE	department_id = &v_dID;
+ 10  EXCEPTION
+ 11  	WHEN ex_fk_constraint THEN
+ 12  		DBMS_OUTPUT.PUT_LINE('ERROR');
+ 13* END;
+SQL> /
+Enter value for v_did: 10
+old   9: 	WHERE	department_id = &v_dID;
+new   9: 	WHERE	department_id = 10;
+
+PL/SQL procedure successfully completed.
+
+SQL> SET SERVEROUTPUT ON
+SQL> /
+Enter value for v_did: 10
+old   9: 	WHERE	department_id = &v_dID;
+new   9: 	WHERE	department_id = 10;
+ERROR                                                                           
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_fk_constraint 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT
+  4  		(ex_fk_constraint, -02292);
+  5  	v_dID 			DEPARTMENTS.department_id%TYPE;
+  6  BEGIN
+  7  	v_dID := 10;
+  8  	DELETE FROM DEPARTMENTS
+  9  	WHERE	department_id = &v_dID;
+ 10  EXCEPTION
+ 11  	WHEN ex_fk_constraint THEN
+ 12  		DBMS_OUTPUT.PUT_LINE('ERROR');
+ 13  		DBMS_OUTPUT.PUT_LINE('ERROR CODE '|| SQLCODE);
+ 14* END;
+SQL> /
+Enter value for v_did: 10
+old   9: 	WHERE	department_id = &v_dID;
+new   9: 	WHERE	department_id = 10;
+ERROR                                                                           
+ERROR CODE -2292                                                                
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_fk_constraint 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT
+  4  		(ex_fk_constraint, -02292);
+  5  	v_dID 			DEPARTMENTS.department_id%TYPE;
+  6  BEGIN
+  7  	v_dID := 10;
+  8  	DELETE FROM DEPARTMENTS
+  9  	WHERE	department_id = &v_dID;
+ 10  EXCEPTION
+ 11  	WHEN ex_fk_constraint THEN
+ 12  		DBMS_OUTPUT.PUT_LINE('ERROR');
+ 13  		DBMS_OUTPUT.PUT_LINE('ERROR CODE '|| SQLCODE);
+ 14  		DBMS_OUTPUT.PUT_LINE('ERROR MSG '|| SQLERRM);
+ 15  		DBMS_OUTPUT.PUT_LINE('TIME '|| TO_CHAR(SYSDATE,'YYYY/MM/dd hh:mm'));
+ 16* END;
+SQL> /
+Enter value for v_did: 10
+old   9: 	WHERE	department_id = &v_dID;
+new   9: 	WHERE	department_id = 10;
+ERROR                                                                           
+ERROR CODE -2292                                                                
+ERROR MSG ORA-02292: integrity constraint (PS2014041.EMP_DEPT_FK) violated -    
+child record found                                                              
+TIME 2018/11/24 11:11                                                           
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_fk_constraint 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT
+  4  		(ex_fk_constraint, -02292);
+  5  	v_dID 			DEPARTMENTS.department_id%TYPE;
+  6  BEGIN
+  7  	v_dID := 10;
+  8  	DELETE FROM DEPARTMENTS
+  9  	WHERE	department_id = &v_dID;
+ 10  EXCEPTION
+ 11  	WHEN ex_fk_constraint THEN
+ 12  		DBMS_OUTPUT.PUT_LINE('ERROR');
+ 13  		DBMS_OUTPUT.PUT_LINE('ERROR CODE '|| SQLCODE);
+ 14  		DBMS_OUTPUT.PUT_LINE('ERROR MSG '|| SQLERRM);
+ 15  		DBMS_OUTPUT.PUT_LINE('TIME '|| TO_CHAR(SYSDATE,'YYYY/MM/dd hh24:mm'));
+ 16* END;
+SQL> /
+Enter value for v_did: 10
+old   9: 	WHERE	department_id = &v_dID;
+new   9: 	WHERE	department_id = 10;
+ERROR                                                                           
+ERROR CODE -2292                                                                
+ERROR MSG ORA-02292: integrity constraint (PS2014041.EMP_DEPT_FK) violated -    
+child record found                                                              
+TIME 2018/11/24 11:11                                                           
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	ex_fk_constraint 	EXCEPTION;
+  3  	PRAGMA EXCEPTION_INIT
+  4  		(ex_fk_constraint, -02292);
+  5  	v_dID 			DEPARTMENTS.department_id%TYPE;
+  6  BEGIN
+  7  	v_dID := 10;
+  8  	DELETE FROM DEPARTMENTS
+  9  	WHERE	department_id = &v_dID;
+ 10  EXCEPTION
+ 11  	WHEN ex_fk_constraint THEN
+ 12  		DBMS_OUTPUT.PUT_LINE('ERROR');
+ 13  		DBMS_OUTPUT.PUT_LINE('ERROR CODE '|| SQLCODE);
+ 14  		DBMS_OUTPUT.PUT_LINE('ERROR MSG '|| SQLERRM);
+ 15  		DBMS_OUTPUT.PUT_LINE('TIME '|| TO_CHAR(SYSDATE,'YYYY/MM/dd HH24:mm'));
+ 16* END;
+SQL> /
+Enter value for v_did: 10
+old   9: 	WHERE	department_id = &v_dID;
+new   9: 	WHERE	department_id = 10;
+ERROR                                                                           
+ERROR CODE -2292                                                                
+ERROR MSG ORA-02292: integrity constraint (PS2014041.EMP_DEPT_FK) violated -    
+child record found                                                              
+TIME 2018/11/24 11:11                                                           
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	exs_more_sal 	EXCEPTION;
+  3  	CURSOR 	emp IS
+  4  	SELECT 	employee_id,
+  5  		first_name,
+  6  		salary,
+  7  		(salary+1500) AS newsal
+  8  	FROM employees;	
+  9  	v_dID 			DEPARTMENTS.department_id%TYPE;
+ 10  BEGIN
+ 11  	FOR i IN emp LOOP
+ 12  		BEGIN
+ 13  			IF emp(i).newsal > 25000 THEN
+ 14  			RAISE exs_more_sal;
+ 15  		EXCEPTION 
+ 16  			WHEN exs_more_sal THEN
+ 17  				DBMS_OUTPUT.PUT_LINE('ERROR');
+ 18  		END IF;
+ 19  		END;
+ 20  	END LOOP;
+ 21* END;
+ 22  /
+		EXCEPTION 
+		*
+ERROR at line 15:
+ORA-06550: line 15, column 3: 
+PLS-00103: Encountered the symbol "EXCEPTION" when expecting one of the 
+following: 
+( begin case declare else elsif end exit for goto if loop mod 
+null pragma raise return select update while with 
+<an identifier> <a double-quoted delimited-identifier> 
+<a bind variable> << continue close current delete fetch lock 
+insert open rollback savepoint set sql execute commit forall 
+merge pipe purge 
+ORA-06550: line 18, column 7: 
+PLS-00103: Encountered the symbol "IF" when expecting one of the following: 
+; <an identifier> <a double-quoted delimited-identifier> 
+current delete exists prior <a single-quoted SQL string> 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	exs_more_sal 	EXCEPTION;
+  3  	CURSOR 	emp IS
+  4  	SELECT 	employee_id,
+  5  		first_name,
+  6  		salary,
+  7  		(salary+1500) AS newsal
+  8  	FROM employees;	
+  9  	v_dID 			DEPARTMENTS.department_id%TYPE;
+ 10  BEGIN
+ 11  	FOR i IN emp LOOP
+ 12  		BEGIN
+ 13  			IF emp(i).newsal > 25000 THEN
+ 14  			RAISE exs_more_sal;
+ 15  			END IF;
+ 16  		EXCEPTION 
+ 17  			WHEN exs_more_sal THEN
+ 18  				DBMS_OUTPUT.PUT_LINE('ERROR');
+ 19  		END;
+ 20  	END LOOP;
+ 21* END;
+ 22  /
+			IF emp(i).newsal > 25000 THEN
+			   *
+ERROR at line 13:
+ORA-06550: line 13, column 7: 
+PLS-00222: no function with name 'EMP' exists in this scope 
+ORA-06550: line 13, column 4: 
+PL/SQL: Statement ignored 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	exs_more_sal 	EXCEPTION;
+  3  	CURSOR 	emp IS
+  4  	SELECT 	employee_id,
+  5  		first_name,
+  6  		salary,
+  7  		(salary+1500) AS newsal
+  8  	FROM employees;	
+  9  	v_dID 			DEPARTMENTS.department_id%TYPE;
+ 10  BEGIN
+ 11  	FOR i IN emp LOOP
+ 12  		BEGIN
+ 13  			IF i.newsal > 25000 THEN
+ 14  			RAISE exs_more_sal;
+ 15  			END IF;
+ 16  		EXCEPTION 
+ 17  			WHEN exs_more_sal THEN
+ 18  				DBMS_OUTPUT.PUT_LINE('ERROR');
+ 19  		END;
+ 20  	END LOOP;
+ 21* END;
+SQL> /
+ERROR                                                                           
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	exs_more_sal 	EXCEPTION;
+  3  	CURSOR 	emp IS
+  4  	SELECT 	employee_id,
+  5  		first_name,
+  6  		salary,
+  7  		(salary+1500) AS newsal
+  8  	FROM employees;	
+  9  	v_dID 			DEPARTMENTS.department_id%TYPE;
+ 10  BEGIN
+ 11  	FOR i IN emp LOOP
+ 12  		BEGIN
+ 13  			IF i.newsal > 2500 THEN
+ 14  			RAISE exs_more_sal;
+ 15  			END IF;
+ 16  		EXCEPTION 
+ 17  			WHEN exs_more_sal THEN
+ 18  				DBMS_OUTPUT.PUT_LINE('ERROR');
+ 19  		END;
+ 20  	END LOOP;
+ 21* END;
+SQL> /
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+ERROR                                                                           
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	exs_more_sal 	EXCEPTION;
+  3  	CURSOR 	emp IS
+  4  	SELECT 	employee_id,
+  5  		first_name,
+  6  		salary,
+  7  		(salary+1500) AS newsal
+  8  	FROM employees;	
+  9  	v_dID 			DEPARTMENTS.department_id%TYPE;
+ 10  BEGIN
+ 11  	FOR i IN emp LOOP
+ 12  		BEGIN
+ 13  			IF i.newsal > 25000 THEN
+ 14  			RAISE exs_more_sal;
+ 15  			END IF;
+ 16  		EXCEPTION 
+ 17  			WHEN exs_more_sal THEN
+ 18  				DBMS_OUTPUT.PUT_LINE('salary more than 25000 '|| i.first_name);
+ 19  		END;
+ 20  	END LOOP;
+ 21* END;
+SQL> /
+salary more than 25000 Steven                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	exs_more_sal 	EXCEPTION;
+  3  	CURSOR 	emp IS
+  4  	SELECT 	employee_id,
+  5  		first_name,
+  6  		salary,
+  7  		(salary+1500) AS newsal
+  8  	FROM employees;	
+  9  	v_dID 			DEPARTMENTS.department_id%TYPE;
+ 10  BEGIN
+ 11  	FOR i IN emp LOOP
+ 12  		BEGIN
+ 13  			IF i.newsal > 25000 THEN
+ 14  			RAISE exs_more_sal;
+ 15  			END IF;
+ 16  		EXCEPTION 
+ 17  			WHEN exs_more_sal THEN
+ 18  				DBMS_OUTPUT.PUT_LINE('salary more than 25000 '|| i.first_name||' '||i.salary);
+ 19  		END;
+ 20  	END LOOP;
+ 21* END;
+SQL> /
+salary more than 25000 Steven 24000                                             
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	exs_more_sal 	EXCEPTION;
+  3  	CURSOR 	emp IS
+  4  	SELECT 	employee_id,
+  5  		first_name,
+  6  		salary,
+  7  		(salary+1500) AS newsal
+  8  	FROM employees;	
+  9  	v_dID 			DEPARTMENTS.department_id%TYPE;
+ 10  BEGIN
+ 11  	FOR i IN emp LOOP
+ 12  		BEGIN
+ 13  			IF i.newsal > 25000 THEN
+ 14  			RAISE exs_more_sal;
+ 15  			END IF;
+ 16  		EXCEPTION 
+ 17  			WHEN exs_more_sal THEN
+ 18  				DBMS_OUTPUT.PUT_LINE('salary more than 25000 '|| i.first_name||' '||i.newsal);
+ 19  		END;
+ 20  	END LOOP;
+ 21* END;
+SQL> /
+salary more than 25000 Steven 25500                                             
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	exs_more_sal 	EXCEPTION;
+  3  	CURSOR 	emp IS
+  4  	SELECT 	employee_id,
+  5  		first_name,
+  6  		salary,
+  7  		(salary+1500) AS newsal
+  8  	FROM employees;	
+  9  	v_dID 			DEPARTMENTS.department_id%TYPE;
+ 10  BEGIN
+ 11  	FOR i IN emp LOOP
+ 12  		BEGIN
+ 13  			IF i.newsal > 25000 THEN
+ 14  			RAISE exs_more_sal;
+ 15  			END IF;
+ 16  		EXCEPTION 
+ 17  			WHEN exs_more_sal THEN
+ 18  				DBMS_OUTPUT.PUT_LINE('salary more than 25000 '||' '||i.employee_id ||' '||i.first_name||' '||i.newsal);
+ 19  		END;
+ 20  	END LOOP;
+ 21* END;
+SQL> /
+salary more than 25000  100 Steven 25500                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	exs_more_sal 	EXCEPTION;
+  3  	CURSOR 	emp IS
+  4  	SELECT 	employee_id,
+  5  		first_name,
+  6  		salary,
+  7  		(salary+1500) AS newsal
+  8  	FROM employees;	
+  9  	v_dID 			DEPARTMENTS.department_id%TYPE;
+ 10  BEGIN
+ 11  	FOR i IN emp LOOP
+ 12  		BEGIN
+ 13  			IF i.newsal > 25000 THEN
+ 14  			RAISE exs_more_sal;
+ 15  			END IF;
+ 16  		EXCEPTION 
+ 17  			WHEN exs_more_sal THEN
+ 18  				DBMS_OUTPUT.PUT_LINE('salary more than 25000 '||' '||i.employee_id ||' '||i.first_name||' '||i.newsal);
+ 19  		END;
+ 20  	END LOOP;
+ 21* END;
+SQL> spool off
