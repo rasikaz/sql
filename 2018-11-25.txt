@@ -1,0 +1,236 @@
+SQL> set serveroutput on
+SQL> set linesize 1000
+SQL> clear screen
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE proc_get_service
+  2  	(p_hd IN employees.hire_date%TYPE, p_service OUT NUMBER)
+  3  IS
+  4  DECLARE
+  5  	v_hd		employees.hire_date%TYPE;
+  6  	v_service 	NUMBER;
+  7  BEGIN
+  8  	v_hd:= p_hd;
+  9  	SELECT 	TRUNC((SYSDATE - v_hd)/365)
+ 10  	INTO	v_service
+ 11  	FROM 	dual;
+ 12  	p_service:=v_service;
+ 13* END;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> show errors
+Errors for PROCEDURE PROC_GET_SERVICE:
+
+LINE/COL ERROR                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+-------- -----------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+4/1      PLS-00103: Encountered the symbol "DECLARE" when expecting one of                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+         the following:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         begin function pragma procedure subtype type <an identifier>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+         <a double-quoted delimited-identifier> current cursor delete                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+         exists prior external language                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         The symbol "begin" was substituted for "DECLARE" to continue.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+13/4     PLS-00103: Encountered the symbol "end-of-file" when expecting                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+         one of the following:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+         ( begin case declare end exception exit for goto if loop mod                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+         null pragma raise return select update while with                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+LINE/COL ERROR                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+-------- -----------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+         <an identifier> <a double-quoted delimited-identifier>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+         <a bind variable> << continue close current delete fetch lock                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+         insert open rollback savepoint set sql execute commit forall                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+         merge pipe purge                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE proc_get_service
+  2  	(p_hd IN employees.hire_date%TYPE, p_service OUT NUMBER)
+  3  IS
+  4  	v_hd		employees.hire_date%TYPE;
+  5  	v_service 	NUMBER;
+  6  BEGIN
+  7  	v_hd:= p_hd;
+  8  	SELECT 	TRUNC((SYSDATE - v_hd)/365)
+  9  	INTO	v_service
+ 10  	FROM 	dual;
+ 11  	p_service:=v_service;
+ 12* END;
+ 13  /
+
+Procedure created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE proc_get_service
+  2  	(p_hd IN employees.hire_date%TYPE, p_service OUT NUMBER)
+  3  IS
+  4  	v_hd		employees.hire_date%TYPE;
+  5  	v_service 	NUMBER;
+  6  BEGIN
+  7  /*******************************************************************************
+  8  PROCEDURE : PROC_GET_SERVICE
+  9  PURPOSE : TAKE HIRE_DATE AND SEND THE SERVICE YEARS TO P_SERVICE FORMAL PARAM
+ 10  DATE			BY			DESC 
+ 11  *********************************************************************************/
+ 12  	v_hd:= p_hd;
+ 13  	SELECT 	TRUNC((SYSDATE - v_hd)/365)
+ 14  	INTO	v_service
+ 15  	FROM 	dual;
+ 16  	p_service:=v_service;
+ 17* END;
+ 18  /
+
+Procedure created.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE proc_get_service
+  2  	(p_hd IN employees.hire_date%TYPE, p_service OUT NUMBER)
+  3  IS
+  4  	v_hd		employees.hire_date%TYPE;
+  5  	v_service 	NUMBER;
+  6  BEGIN
+  7  /*******************************************************************************
+  8  PROCEDURE : PROC_GET_SERVICE
+  9  PURPOSE : TAKE HIRE_DATE AND SEND THE SERVICE YEARS TO P_SERVICE FORMAL PARAM
+ 10  DATE			BY			DESC 
+ 11  *********************************************************************************/
+ 12  	v_hd:= p_hd;
+ 13  	SELECT 	TRUNC((SYSDATE - v_hd)/365)
+ 14  	INTO	v_service
+ 15  	FROM 	dual;
+ 16  	p_service:=v_service;
+ 17* END proc_get_service;
+SQL> /
+
+Procedure created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE proc_get_service
+  2  	(p_hd IN employees.hire_date%TYPE)
+  3  IS
+  4  	v_hd		employees.hire_date%TYPE;
+  5  	v_service 	NUMBER;
+  6  BEGIN
+  7  /*******************************************************************************
+  8  PROCEDURE : PROC_GET_SERVICE
+  9  PURPOSE : TAKE HIRE_DATE AND DISPLAY THE SERVICE
+ 10  DATE			BY			DESC 
+ 11  *********************************************************************************/
+ 12  	v_hd:= p_hd;
+ 13  	SELECT 	TRUNC((SYSDATE - v_hd)/365)
+ 14  	INTO	v_service
+ 15  	FROM 	dual;
+ 16  	DBMS_OUTPUT.PUT_LINE('SERVICE : '|| v_service);
+ 17* END proc_get_service;
+ 18  /
+
+Procedure created.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  BEGIN
+  2  	proc_get_service('12-NOV-2011');
+  3* END;
+  4  /
+SERVICE : 7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+PL/SQL procedure successfully completed.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE proc_get_service
+  2  	(p_hd IN employees.hire_date%TYPE, p_service OUT NUMBER)
+  3  IS
+  4  	v_hd		employees.hire_date%TYPE;
+  5  	v_service 	NUMBER;
+  6  BEGIN
+  7  /*******************************************************************************
+  8  PROCEDURE : PROC_GET_SERVICE
+  9  PURPOSE : TAKE HIRE_DATE AND SEND THE SERVICE YEARS TO P_SERVICE FORMAL PARAM
+ 10  DATE			BY			DESC 
+ 11  *********************************************************************************/
+ 12  	v_hd:= p_hd;
+ 13  	SELECT 	TRUNC((SYSDATE - v_hd)/365)
+ 14  	INTO	v_service
+ 15  	FROM 	dual;
+ 16  	p_service:=v_service;
+ 17* END proc_get_service;
+SQL> /
+
+Procedure created.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	v_service NUMBER;
+  3  BEGIN
+  4  	proc_get_service('22-NOV-2000', v_service);
+  5  	DBMS_OUTPUT.PUT_LINE('SERVICE : ' v_service);
+  6* END;
+SQL> /
+	DBMS_OUTPUT.PUT_LINE('SERVICE : ' v_service);
+	                                  *
+ERROR at line 5:
+ORA-06550: line 5, column 36: 
+PLS-00103: Encountered the symbol "V_SERVICE" when expecting one of the following: 
+) , * & = - + < / > at in is mod remainder not rem => 
+<an exponent (**)> <> or != or ~= >= <= <> and or like like2 
+like4 likec as between from using || multiset member 
+submultiset 
+The symbol "," was substituted for "V_SERVICE" to continue. 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	v_service NUMBER;
+  3  BEGIN
+  4  	proc_get_service('22-NOV-2000', v_service);
+  5  	DBMS_OUTPUT.PUT_LINE('SERVICE : ' ||v_service);
+  6* END;
+SQL> /
+SERVICE : 18                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	v_service NUMBER;
+  3  	v_sd	DATE := '22-NOV-2000';
+  4  BEGIN
+  5  	proc_get_service(p_hd => v_sd,p_service => v_service);
+  6  	DBMS_OUTPUT.PUT_LINE('SERVICE : ' ||v_service);
+  7* END;
+  8  /
+SERVICE : 18                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  	v_service NUMBER;
+  3  	v_sd	DATE := '22-NOV-2000';
+  4  BEGIN
+  5  	proc_get_service(p_hd => v_sd,p_service => v_service);
+  6  	DBMS_OUTPUT.PUT_LINE('SERVICE : ' ||v_service);
+  7* END;
+SQL> spool off
