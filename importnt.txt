@@ -1,0 +1,152 @@
+CREATE OR REPLACE PACKAGE pkg_load_emp
+IS	
+	TYPE rec_emp IS RECORD(
+		eNO	EMPLOYEES.employee_id%TYPE,
+		fn	EMPLOYEES.first_name%TYPE,
+		bsal	EMPLOYEES.salary%TYPE,
+		asal	EMPLOYEES.salary%TYPE,
+		service	NUMBER
+	);
+	TYPE type_rec_emp IS TABLE OF rec_emp 
+		INDEX BY BINARY_INTEGER; 
+	PROCEDURE proc_load_emp_info(p_type_emp	OUT type_rec_emp);
+	PROCEDURE proc_read_emp_info(p_type_emp	IN type_rec_emp);
+END pkg_load_emp;
+
+//////////////////////////////////////////
+
+CREATE OR REPLACE PACKAGE BODY pkg_load_emp
+IS	
+	/*TYPE rec_emp IS RECORD(
+		eNO	EMPLOYEES.employee_id%TYPE,
+		fn	EMPLOYEES.first_name%TYPE,
+		bsal	EMPLOYEES.salary%TYPE,
+		asal	EMPLOYEES.salary%TYPE,
+		service	NUMBER
+	);
+	TYPE type_rec_emp IS TABLE OF rec_emp 
+		INDEX BY BINARY_INTEGER; */
+/********************************************************
+get the percentage according to service
+********************************************************/
+	FUNCTION func_get_perc(p_service IN NUMBER) RETURN NUMBER
+	IS
+		v_service NUMBER:= p_service;
+		v_perc NUMBER;
+	BEGIN
+		IF v_service > 25 THEN
+			v_perc := 1.3;
+		ELSIF v_service >20 THEN
+			v_perc := 1.2;
+		ELSE
+			v_perc := 1.1;
+		END IF;
+		RETURN v_perc;
+	END func_get_perc;
+/*********************************************************
+proc_load_emp_info implement
+**********************************************************/
+	PROCEDURE proc_load_emp_info(p_type_emp	OUT type_rec_emp)
+	IS
+		CURSOR cur_emp_dept IS SELECT * FROM EMPLOYEES;
+		v_hire_date  EMPLOYEES.hire_date%TYPE;
+		i NUMBER := 0;
+		v_eNO	EMPLOYEES.employee_id%TYPE;
+		v_fn	EMPLOYEES.first_name%TYPE;
+		v_bsal	EMPLOYEES.salary%TYPE;
+		v_asal	EMPLOYEES.salary%TYPE;
+		v_service	NUMBER;
+		v_cur_emp   cur_emp_dept%ROWTYPE;
+	BEGIN
+		OPEN cur_em p_dept;
+		LOOP
+		FETCH 	cur_emp_dept
+		INTO	v_cur_emp;
+		--do the math
+		v_service := TRUNC((SYSDATE-v_cur_emp.hire_date)/365);
+		v_asal := func_get_perc(v_service)*v_cur_emp.salary;
+		--enter to table
+		p_type_emp(i).eNO := v_cur_emp.employee_id;
+		p_type_emp(i).fn := v_cur_emp.first_name;
+		p_type_emp(i).bsal := v_cur_emp.salary;
+		p_type_emp(i).asal := v_asal;
+		p_type_emp(i).service := v_service;
+		--increment i
+		i:=i+1;
+			EXIT WHEN cur_emp_dept%NOTFOUND; 
+		END LOOP;
+		CLOSE cur_emp_dept;
+	END proc_load_emp_info;
+/***************************************************************
+display index table
+***************************************************************/
+	PROCEDURE proc_read_emp_info(p_type_emp	IN type_rec_emp)
+	IS
+		v_type_emp type_rec_emp := p_type_emp;
+	BEGIN
+		FOR i IN 0..v_type_emp.COUNT LOOP
+			DBMS_OUTPUT.PUT_LINE(v_type_emp(i).eNO||' '||v_type_emp(i).fn||' '||v_type_emp(i).bsal||' '||v_type_emp(i).asal||' '||v_type_emp(i).service);
+		END LOOP;
+	END proc_read_emp_info;
+END pkg_load_emp;
+/
+////////////////////////////////////////////
+DECLARE
+	tbl_emp		pkg_load_emp.type_rec_emp;
+BEGIN
+	pkg_load_emp.proc_load_emp_info(tbl_emp);
+	pkg_load_emp.proc_read_emp_info(tbl_emp);
+END;
+
+////////////////////////////////////////////////////
+CREATE OR REPLACE TRIGGER trig_emp_log
+	BEFORE
+		INSERT 
+	ON emp107
+BEGIN
+	INSERT INTO user_log
+	VALUES(emp_no.nextval,user,TO_CHAR(SYSDATE),'insert');
+END;
+///////////////////////////////////////////////////////
+CREATE OR REPLACE TRIGGER trig_emp_log
+	BEFORE
+		INSERT
+	ON emp107
+BEGIN
+      	INSERT INTO user_log
+      	VALUES(emp_no.nextval,user,TO_CHAR(SYSDATE),'insert');
+      	CASE
+		WHEN INSERTING THEN
+			IF to_char(sysdate,'day')='saturday' OR 
+			to_char(sysdate,'day')='sunday' OR
+			to_char(sysdate,'HH24:MI') > '16:29' AND to_char(sysdate,'HH24:MI') < '16:31'
+			THEN
+				RAISE_APPLICATION_ERROR(-20010,'not allow to insert');
+			END IF;
+      	END CASE;
+END;
+//////////////////////////////////////////////
+ insert into emp107(employee_id,last_name,email,hire_date,job_id)
+     values(1011, 'weragoda', 'rasika@gmail.com',sysdate,1011)
+///////////////////////////////////////////////////////////
+
+CREATE OR REPLACE TRIGGER trig_emp_log
+	BEFORE
+		INSERT
+	ON emp107
+	FOR EACH ROW
+BEGIN
+	IF INSERTING THEN
+			INSERT INTO emp_log(employee_id,last_name,email,hire_date,job_id,event_name)
+      			VALUES(:old.employee_id,:old.last_name,:old.email,:old.hire_date,:old.job_id,'old val');
+			INSERT INTO emp_log(employee_id,last_name,email,hire_date,job_id,event_name)
+      			VALUES(:new.employee_id,:new.last_name,:new.email,:new.hire_date,:new.job_id,'new val');
+	ELSE
+		IF to_char(sysdate,'day')='saturday' OR 
+		to_char(sysdate,'day')='sunday' OR
+		to_char(sysdate,'HH24:MI') > '16:29' AND to_char(sysdate,'HH24:MI') < '18:31'
+		THEN
+			RAISE_APPLICATION_ERROR(-20010,'not allow to insert');
+		END IF;
+	END IF;
+END;
